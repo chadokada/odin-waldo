@@ -1,5 +1,10 @@
+
 .App {
+  display: flex;
+  flex-flow: column;
   text-align: center;
+  background-color: bisque;
+  min-height: 100vh;
 }
 
 .App-logo {
@@ -7,32 +12,18 @@
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+select{
+  width: 200px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.character-select-dropdown{
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
+  flex-flow: column;
+  gap: 5px;
+  width: fit-content;
+  padding: 10px;
+  
+  background-color: grey;
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  border: 1px solid blue;
 }

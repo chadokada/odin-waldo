@@ -16,39 +16,36 @@ const DropDown = ({targetXY, menuXY, visibility, hideDropDown}) => {
   }
 
   const handleClick = (event) => {
-    console.log(event.target.getAttribute('character'))
-    console.log(event.target.parentNode.getAttribute('targetX'))
-    console.log(event.target.parentNode.getAttribute('targetY'))
+    const targetX = event.target.closest('.character-select-dropdown').getAttribute('targetX')
+    const targetY = event.target.closest('.character-select-dropdown').getAttribute('targetY')
+    const character = event.target.closest('.dropdown-selection').getAttribute('character')
+
+    console.log(character)
+    console.log(targetX, ", ", targetY)
+    console.log('///////////////////////////////')
+    
     hideDropDown();
   }
 
   return (
-    <div 
-      className='character-select-dropdown' 
-      style={divStyle}
-      targetX={targetXY[0]}
-      targetY={targetXY[1]}
-    >
-      <div 
-        className='dropdown-selection'
-        onClick={handleClick}
-        character='Option 1'
-      >
-        Option 1
+    <div className='character-select-dropdown' style={divStyle} targetX={targetXY[0]} targetY={targetXY[1]} >
+      <div className='dropdown-selection' onClick={handleClick} character='Big Boss'>
+        <div className='selection-img-container'>
+          <img className='selection-img' src={require('./assets/characters/bigboss.png')}/>
+        </div>
+        <div>Big Boss</div>
       </div>
-      <div 
-        className='dropdown-selection'
-        onClick={handleClick}
-        character='Option 2'
-      >
-        Option 2
+      <div className='dropdown-selection' onClick={handleClick} character='Arthur Morgan'>
+        <div className='selection-img-container'>
+          <img className='selection-img' src={require('./assets/characters/arthurmorgan.png')}/>
+        </div>
+        <div>Arthur Morgan</div>
       </div>
-      <div 
-        className='dropdown-selection'
-        onClick={handleClick}
-        character='Option 3'
-      >
-        Option 3
+      <div className='dropdown-selection' onClick={handleClick} character='Ryu'>
+        <div className='selection-img-container'>
+          <img className='selection-img' src={require('./assets/characters/ryu.png')}/>
+        </div>
+        <div>Ryu</div>
       </div>
     </div>
   )

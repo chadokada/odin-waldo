@@ -20,9 +20,31 @@ select{
   flex-flow: column;
   gap: 5px;
   width: fit-content;
-  padding: 10px;
-  
-  background-color: grey;
+  padding: 5px;
+  color: rgb(225, 225, 225);
+  font-weight: bold;
+  background-color: rgb(75, 75, 75);
+  border-radius: 5px;
+  border: 2px solid black
+}
 
-  border: 1px solid blue;
+.dropdown-selection{
+  display: flex;
+  align-items: center;
+  padding: 2px;
+}
+
+.dropdown-selection:hover{
+  background-color: rgb(100, 100, 100);
+  border-radius: 5px;
+ 
+}
+
+.selection-img-container{
+  height: 40px;
+  width: 40px;
+  
+}
+.selection-img{
+  height: 40px;
 }

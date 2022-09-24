@@ -5,6 +5,8 @@ import DropDown from './DropDown';
 const App = () => {
   const hiddenDropDown = <DropDown 
     targetXY={[0,0]}
+    //menuXY={[600,200]}
+    //visibility='visible'
     menuXY={[0, 0]} 
     visibility='hidden'
   />
@@ -36,33 +38,18 @@ const App = () => {
     <div className="App">
 
       {dropDown}
-    
+      
       <div>
         <img 
           alt='bowler'
           id='hat-img'
-          src={require('./Images/pink_bowler.png')}
+          src={require('./assets/gameboards/ps4.jpg')}
           onClick={handleImgClick}
         />
       </div>
-
+       
     </div>
   );
 }
 
 export default App;
-
-//
-//
-//
-
-let dropDown = document.createElement('select')
-dropDown.className = 'character-select-dropdown'
-
-for (let i = 1; i < 4; i++) {
-  const option = document.createElement('option');
-  option.value = `Option ${i}`;
-  option.text = `Option ${i}`;
-  dropDown.appendChild(option);
-}
-

@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
-import './App.css';
-import DropDown from './DropDown';
+import './styles/App.css';
+
+import GameStatus from './components/GameStatus';
+import DropDown from './components/DropDown';
 
 const App = () => {
+
+
+
   const hiddenDropDown = <DropDown 
     targetXY={[0,0]}
     //menuXY={[600,200]}
@@ -33,10 +38,9 @@ const App = () => {
     )
   }
 
-
   return (
     <div className="App">
-
+      <GameStatus />
       {dropDown}
       
       <div>
@@ -47,7 +51,8 @@ const App = () => {
           onClick={handleImgClick}
         />
       </div>
-       
+
+
     </div>
   );
 }

@@ -1,14 +1,11 @@
 import React from 'react';
-import '../styles/App.css';
+import 'styles/App.css';
+import DropDownSelection from './DropDownSelection';
 
 import { getXY } from '../firebase/dbFunctions'
 
-//
-// x = 239px
-// y = 194pxL
-//
 
-const DropDown = ({targetXY, menuXY, visibility, hideDropDown}) => {
+const DropDown = ({targetXY, menuXY, visibility, characters, hideDropDown}) => {
 
   const divStyle = {
     position: 'absolute',
@@ -18,7 +15,7 @@ const DropDown = ({targetXY, menuXY, visibility, hideDropDown}) => {
   }
 
   // This needs to be bubbled up into a parent component
-  const handleClick = (event) => {
+  const handleMenuClick = (event) => {
     const targetX = parseInt(event.target.closest('.character-select-dropdown').getAttribute('targetX'))
     const targetY = parseInt(event.target.closest('.character-select-dropdown').getAttribute('targetY'))
     const character = event.target.closest('.dropdown-selection').getAttribute('character')
@@ -42,27 +39,18 @@ const DropDown = ({targetXY, menuXY, visibility, hideDropDown}) => {
     }
   }
 
-
   return (
     <div className='character-select-dropdown' style={divStyle} targetX={targetXY[0]} targetY={targetXY[1]} >
-      <div className='dropdown-selection' onClick={handleClick} character='Big Boss'>
-        <div className='selection-img-container'>
-          <img className='selection-img' alt='Big Boss' src={require('../assets/characters/bigboss.png')}/>
-        </div>
-        <div>Big Boss</div>
-      </div>
-      <div className='dropdown-selection' onClick={handleClick} character='Arthur Morgan'>
-        <div className='selection-img-container'>
-          <img className='selection-img' alt='Arthur Morgan' src={require('../assets/characters/arthurmorgan.png')}/>
-        </div>
-        <div>Arthur Morgan</div>
-      </div>
-      <div className='dropdown-selection' onClick={handleClick} character='Ryu'>
-        <div className='selection-img-container'>
-          <img className='selection-img' alt='Ryu' src={require('../assets/characters/ryu.png')}/>
-        </div>
-        <div>Ryu</div>
-      </div>
+      {characters.map((character) => {
+        return(
+          <DropDownSelection 
+            key={character.name}
+            name={character.name}
+            src={character.src}
+            handleMenuClick={handleMenuClick}
+          />
+        )
+      })}
     </div>
   )
 }

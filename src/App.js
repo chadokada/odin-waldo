@@ -47,7 +47,8 @@ const App = () => {
         <img 
           alt='bowler'
           id='hat-img'
-          src={require('./assets/gameboards/ps4.jpg')}
+          src={require('assets/gameboards/ps4.jpg')}
+          //src={require('./assets/gameboards/ps4.jpg')}
           onClick={handleImgClick}
         />
       </div>

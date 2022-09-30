@@ -9,7 +9,7 @@ const GameStatus = ({ characters }) => {
       <div className='game-status-icons'>
         {characters.map((character) => {
           return(
-            <GameStatusIcon character={character}/>
+            <GameStatusIcon key={character.name} character={character}/>
           )
         })}
       </div>

@@ -6,7 +6,7 @@ const GameStatusIcon = ({ character }) => {
 
   return (
     <div className='game-status-icon-container'>
-      <img className='game-status-icon' alt={character.name} src={character.src}/>
+      <img className='game-status-icon' id={`${character.name}-icon`} alt={character.name} src={character.src}/>
     </div>
   )
 };

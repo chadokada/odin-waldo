@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './styles/App.css';
+import GameBoard from 'components/GameBoard';
 import GameStatus from './components/GameStatus';
 import DropDown from './components/DropDown';
 import GAMEDATA from 'seedGameData';
@@ -19,7 +20,11 @@ const App = () => {
     //visibility='visible'
   />
   
+  // Game state
+  
   let [dropDown, setDropDown] = useState(hiddenDropDown)
+  let [correctGuesses, setCorrectGuesses] = useState([])
+  let [gameEnded, setGameEnded] = useState(false)
 
   const handleGameboardClick = (event) => {
     const targetX = event.pageX - event.target.offsetLeft;
@@ -40,39 +45,53 @@ const App = () => {
 
   // Methods for DropDown
 
-  const hideDropDown = () => {
-    setDropDown(hiddenDropDown)
-  }
-
   const handleMenuClick = (event) => {
-    const targetX = parseInt(event.target.closest('.character-select-dropdown').getAttribute('targetX'))
-    const targetY = parseInt(event.target.closest('.character-select-dropdown').getAttribute('targetY'))
-    const character = event.target.closest('.dropdown-selection').getAttribute('character')
+    const targetX = parseInt(event.target.closest('.character-select-dropdown').getAttribute('targetX'));
+    const targetY = parseInt(event.target.closest('.character-select-dropdown').getAttribute('targetY'));
+    const character = event.target.closest('.dropdown-selection').getAttribute('character');
 
-    hideDropDown();
-    checkInput(character, targetX, targetY)
+    setDropDown(hiddenDropDown);
+    checkInput(character, targetX, targetY);
   }
 
   const checkInput = async (character, targetX, targetY) => {
-    const selected = await characterSelected(character, targetX, targetY)
-    console.log(selected)
-
+    const selected = await characterSelected(character, targetX, targetY);
+    
+    if (selected) {
+      setCorrectGuesses([...correctGuesses, character]);
+    }
   }
+
+  const endGame = () => {
+    console.log('you won')
+  }
+
+
+  useEffect(() => {
+
+    if (correctGuesses.length > 0) { 
+      const latestGuess = correctGuesses[correctGuesses.length - 1];
+      const characterIcon = document.getElementById(`${latestGuess}-icon`);
+      characterIcon.style.opacity = 0.3
+    };
+
+    if (correctGuesses.length === 3) { 
+      endGame()
+      setGameEnded(true)
+    };
+  }, [correctGuesses])
+
 
   return (
     <div className="App">
       <GameStatus characters={gameboard.characters} />
       {dropDown}
       
-      
-      <div>
-        <img 
-          alt='gameboard'
-          id='gameboard-img'
-          src={gameboard.src}
-          onClick={handleGameboardClick}
-        />
-      </div>
+      {
+        !gameEnded 
+        ? <GameBoard gameboardSrc={gameboard.src} handleGameboardClick={handleGameboardClick}/> 
+        : <GameBoard gameboardSrc={gameboard.src}/>
+      }
 
     </div>
   );

@@ -15,6 +15,48 @@ select{
   width: 200px;
 }
 
+.game {
+  display: flex;
+  flex-flow: column;
+  text-align: center;
+  min-height: 100vh;
+}
+
+/* Styles for GameSelection component */
+
+.game-selection-container{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  z-index: 100;
+
+  background-color: rgba(150, 150, 150, 0.8);
+}
+
+.game-selection-menu-container{
+  width: 75%;
+  height: fit-content;
+  border: 2px solid white;
+}
+
+.board-selection-img-container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.board-selection-img{
+  width: calc(100% / 3.05)
+}
+
+.board-selection-img:hover{
+  border: 1px solid red;
+}
+
 /* Styles for GameStatus component */
 
 .game-status-container{

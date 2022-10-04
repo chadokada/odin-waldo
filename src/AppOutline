@@ -1,0 +1,9 @@
+App
+{gameSelection: ps4, ps3, etc}
+{gameStarted: true/false}
+  - Game
+    - GameStatus
+        -GameStatusIcon
+    - DropDown
+        - DropDownSelection
+    - GameBoard

@@ -3,11 +3,13 @@ import 'styles/App.css';
 import GameBoard from 'components/GameBoard';
 import GameStatus from 'components/GameStatus';
 import DropDown from 'components/DropDown';
-//import GAMEDATA from 'seedGameData';
+import GAMEDATA from 'seedGameData';
 
 import { characterSelected } from '../firebase/dbFunctions'
 
-const Game = ({ gameData }) => {
+const Game = ({ selectedGame }) => {
+
+  const gameData = GAMEDATA[selectedGame];
 
   const hiddenDropDown = <DropDown 
     targetXY={[0,0]}
@@ -53,7 +55,7 @@ const Game = ({ gameData }) => {
   }
 
   const checkInput = async (character, targetX, targetY) => {
-    const selected = await characterSelected(character, targetX, targetY);
+    const selected = await characterSelected(selectedGame, character, targetX, targetY);
     
     if (selected) {
       setCorrectGuesses([...correctGuesses, character]);

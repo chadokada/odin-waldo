@@ -4,6 +4,8 @@ import GameSelection from 'components/GameSelection';
 import Game from './components/Game';
 import GAMEDATA from 'seedGameData';
 
+import Timer from 'components/Timer';
+
 
 const App = () => {
 
@@ -21,12 +23,12 @@ const App = () => {
 
   return (
     <div>
-
-      {
+      <Timer />
+      {/*
         !startGame 
         ? <GameSelection chooseGame={chooseGame} />
-        : <Game gameData={GAMEDATA[selectedGame]} />
-      }
+        : <Game selectedGame={selectedGame} />
+      */}
       
 
     </div>

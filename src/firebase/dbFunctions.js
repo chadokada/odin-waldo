@@ -6,8 +6,8 @@ const firebaseAppConfig = getFirebaseConfig();
 const firebaseApp = initializeApp(firebaseAppConfig);
 const db = getFirestore(firebaseApp);
 
-export async function getCharCoords (character) {
-  const docRef = doc(db, 'ps4', character);
+export async function getCharCoords (selectedGame, character) {
+  const docRef = doc(db, selectedGame , character);
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()){
@@ -19,8 +19,9 @@ export async function getCharCoords (character) {
   }
 }
 
-export const characterSelected = async (character, targetX, targetY) => {
-  const charCoords = await getCharCoords(character);
+export const characterSelected = async (selectedGame, character, targetX, targetY) => {
+  const charCoords = await getCharCoords(selectedGame, character);
+
   const xMin = charCoords['x-min']
   const xMax = charCoords['x-max']
   const yMin = charCoords['y-min']

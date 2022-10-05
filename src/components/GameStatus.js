@@ -6,12 +6,17 @@ const GameStatus = ({ characters }) => {
 
   return (
     <div className='game-status-container'>
+      <div className='blank'>
+      </div>
       <div className='game-status-icons'>
         {characters.map((character) => {
           return(
             <GameStatusIcon key={character.name} character={character}/>
           )
         })}
+      </div>
+      <div className='timer'>
+        1:20
       </div>
     </div>
   )

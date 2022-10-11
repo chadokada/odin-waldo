@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getFirebaseConfig } from './firebase-config';
-import { getFirestore, collection, doc, getDoc, query } from 'firebase/firestore';
+import { getFirestore, collection, doc, getDoc, query, addDoc, setDoc } from 'firebase/firestore';
 
 const firebaseAppConfig = getFirebaseConfig();
 const firebaseApp = initializeApp(firebaseAppConfig);
@@ -31,6 +31,30 @@ export const characterSelected = async (selectedGame, character, targetX, target
     return true;
   } else {
     return false;
+  }
+}
+
+
+
+export const addCompletionTime = async (game, playerName, time) => {
+  //const bestTimesRef = collection(db, 'best-times');
+  const bestTimesRef = doc(db, 'best-times', game);
+
+
+  try {
+    await setDoc(bestTimesRef, {
+      playerName:[time]
+      
+    }, {merge: true})
+    /*
+    await setDoc(doc(bestTimesRef, game),{
+      name: playerName,
+      time: time
+    }, {merge: true})
+    */
+  } 
+  catch (error) {
+    console.error('There was an error: ', error)
   }
 }
 

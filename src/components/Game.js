@@ -5,9 +5,11 @@ import GameStatus from 'components/GameStatus';
 import DropDown from 'components/DropDown';
 import GAMEDATA from 'seedGameData';
 
-import { characterSelected } from '../firebase/dbFunctions'
+import { characterSelected, addCompletionTime } from '../firebase/dbFunctions'
 
-const Game = ({ time, selectedGame, setTimerRunning }) => {
+const Game = ({ time, selectedGame, setTimerRunning, playerName, setStartGame }) => {
+
+  //console.log('Welcome: ', playerName)
 
   const gameData = GAMEDATA[selectedGame];
 
@@ -20,6 +22,8 @@ const Game = ({ time, selectedGame, setTimerRunning }) => {
     //visibility='visible'
   />
   
+
+
   // Game state
 
   let [dropDown, setDropDown] = useState(hiddenDropDown)
@@ -76,11 +80,13 @@ const Game = ({ time, selectedGame, setTimerRunning }) => {
   const endGame = () => {
     setTimerRunning(false);
 
-    console.log('you won')
+    addCompletionTime(selectedGame, playerName, time);
 
+    console.log('you won')
     console.log(`time in milliseconds: ${time}`)
     console.log(`time formatted: ${formatTime(time)}`)
 
+    setStartGame(false)    
   }
 
 

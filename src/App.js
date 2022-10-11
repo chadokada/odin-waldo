@@ -4,8 +4,6 @@ import GameSelection from 'components/GameSelection';
 import Game from './components/Game';
 import GAMEDATA from 'seedGameData';
 
-import Timer from 'components/Timer';
-
 
 const App = () => {
 
@@ -13,6 +11,7 @@ const App = () => {
   const [selectedGame, setSelectedGame] = useState('');
   const [time, setTime] = useState(0);
   const [timerRunning, setTimerRunning] = useState(false);
+  const [playerName, setPlayerName] = useState('Player')
 
   useEffect(() => {
     let interval;
@@ -35,13 +34,23 @@ const App = () => {
     document.querySelector('.game-selection-container').setAttribute('visibility', 'hidden') 
   }
 
+  const updatePlayerName = (event) => {
+    setPlayerName(event.target.value)
+  }
+
   return (
     <div>
       
       {
         !startGame 
-        ? <GameSelection chooseGame={chooseGame} />
-        : <Game time={time} selectedGame={selectedGame} setTimerRunning={setTimerRunning}/>
+        ? <GameSelection chooseGame={chooseGame} playerName={playerName} updatePlayerName={updatePlayerName} />
+        : <Game 
+            time={time} 
+            selectedGame={selectedGame} 
+            setTimerRunning={setTimerRunning} 
+            playerName={playerName}
+            setStartGame={setStartGame}
+          />
       }
       
 

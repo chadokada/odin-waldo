@@ -3,9 +3,12 @@ import './styles/App.css';
 import GameSelection from 'components/GameSelection';
 import Game from './components/Game';
 import GAMEDATA from 'seedGameData';
+import { test } from './firebase/dbFunctions'
 
 
 const App = () => {
+
+  test()
 
   const [startGame, setStartGame] = useState(false);
   const [selectedGame, setSelectedGame] = useState('');

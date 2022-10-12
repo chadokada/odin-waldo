@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getFirebaseConfig } from './firebase-config';
-import { getFirestore, collection, doc, getDoc, query, addDoc, setDoc } from 'firebase/firestore';
+import { getFirestore, collection, doc, getDoc, updateDoc, query, addDoc, setDoc, getDocs, arrayUnion } from 'firebase/firestore';
 
 const firebaseAppConfig = getFirebaseConfig();
 const firebaseApp = initializeApp(firebaseAppConfig);
@@ -35,23 +35,45 @@ export const characterSelected = async (selectedGame, character, targetX, target
 }
 
 
+export const test = async () => {
+  /* Loops through best scores
+  const querySnapshot = await getDocs(collection(db,"ps2-best-times"))
+  querySnapshot.forEach((doc) => {
+    console.log(doc.id, " => ", doc.data().players)
+    console.log("///////////////////////")
+  })
+  */
+
+  const querySnapshot = await getDocs(collection(db,"ps2-best-times"))
+
+  console.log(querySnapshot.select())
+
+  /* Updates fields in existing document
+  const ps2Ref = doc(db, 'ps2-best-times', '1000')
+
+  await updateDoc(ps2Ref, {
+    players: arrayUnion('Joe Fucc')
+  })
+  */
+}
+
+
 
 export const addCompletionTime = async (game, playerName, time) => {
   //const bestTimesRef = collection(db, 'best-times');
-  const bestTimesRef = doc(db, 'best-times', game);
+  //const bestTimesRef = doc(db, 'best-times', game);
+
+  //const playerDataString = `{"${playerName}":[${time}]}`
+  //const playerData = JSON.parse(playerDataString)
+
+  const bestTimesRef = collection(db, `${game}-best-times`);
 
 
   try {
-    await setDoc(bestTimesRef, {
-      playerName:[time]
-      
-    }, {merge: true})
-    /*
-    await setDoc(doc(bestTimesRef, game),{
-      name: playerName,
-      time: time
-    }, {merge: true})
-    */
+    //await setDoc(bestTimesRef, playerData, {merge: true})
+    
+    //await setDoc(doc(bestTimesRef, playerName))
+
   } 
   catch (error) {
     console.error('There was an error: ', error)

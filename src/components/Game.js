@@ -7,7 +7,7 @@ import GAMEDATA from 'seedGameData';
 
 import { characterSelected, addCompletionTime } from '../firebase/dbFunctions'
 
-const Game = ({ time, selectedGame, setTimerRunning, playerName, setStartGame }) => {
+const Game = ({ time, selectedGame, endGameTimer, playerName, setStartGame }) => {
 
   //console.log('Welcome: ', playerName)
 
@@ -78,9 +78,10 @@ const Game = ({ time, selectedGame, setTimerRunning, playerName, setStartGame })
   }
 
   const endGame = () => {
-    setTimerRunning(false);
+    endGameTimer();
 
     addCompletionTime(selectedGame, playerName, time);
+    //addCompletionTime(selectedGame, playerName, 6420);
 
     console.log('you won')
     console.log(`time in milliseconds: ${time}`)

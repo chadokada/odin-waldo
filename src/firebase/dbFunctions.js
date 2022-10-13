@@ -35,42 +35,46 @@ export const characterSelected = async (selectedGame, character, targetX, target
 }
 
 
-export const test = async () => {
-  /* Loops through best scores
-  const querySnapshot = await getDocs(collection(db,"ps2-best-times"))
+export const getBestTimes = async (game) => {
+  const querySnapshot = await getDocs(collection(db,`${game}-best-times`))
+  const bestTimes = {};
+
   querySnapshot.forEach((doc) => {
-    console.log(doc.id, " => ", doc.data().players)
-    console.log("///////////////////////")
+    bestTimes[doc.id] = doc.data().players
   })
-  */
-
-  const querySnapshot = await getDocs(collection(db,"ps2-best-times"))
-
-  console.log(querySnapshot.select())
-
-  /* Updates fields in existing document
-  const ps2Ref = doc(db, 'ps2-best-times', '1000')
-
-  await updateDoc(ps2Ref, {
-    players: arrayUnion('Joe Fucc')
-  })
-  */
+ 
+  //return querySnapshot;
+  return bestTimes;
 }
 
 
+export const test = async () => {
+  /*
+  const querySnapshot = await getDocs(collection(db,"ps2-best-times"))
+  
+  querySnapshot.forEach((doc) => {
+    console.log(doc.id, " => ", doc.data().players)
+  })
+  */
+  /*
+  console.log(querySnapshot.docs[0].id)
+  console.log(querySnapshot.docs[0].data())
+  console.log("///////////////////////")
+  */
+  
+  const bestTimes = await getBestTimes('ps2');
+  //console.log(bestTimes)
+
+}
+
 
 export const addCompletionTime = async (game, playerName, time) => {
-  //const bestTimesRef = collection(db, 'best-times');
-  //const bestTimesRef = doc(db, 'best-times', game);
-
-  //const playerDataString = `{"${playerName}":[${time}]}`
-  //const playerData = JSON.parse(playerDataString)
-
-  const bestTimesRef = collection(db, `${game}-best-times`);
-
+  const bestTimeDoc = doc(db, `${game}-best-times`, `${time}`);
 
   try {
-    //await setDoc(bestTimesRef, playerData, {merge: true})
+    await setDoc(bestTimeDoc, {
+      players : arrayUnion(playerName)
+    }, {merge: true})
     
     //await setDoc(doc(bestTimesRef, playerName))
 

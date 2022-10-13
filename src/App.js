@@ -3,7 +3,9 @@ import './styles/App.css';
 import GameSelection from 'components/GameSelection';
 import Game from './components/Game';
 import GAMEDATA from 'seedGameData';
-import { test } from './firebase/dbFunctions'
+import { test, getBestTimes } from './firebase/dbFunctions'
+
+import ScoreBoard from './components/ScoreBoard';
 
 
 const App = () => {
@@ -14,7 +16,10 @@ const App = () => {
   const [selectedGame, setSelectedGame] = useState('');
   const [time, setTime] = useState(0);
   const [timerRunning, setTimerRunning] = useState(false);
-  const [playerName, setPlayerName] = useState('Player')
+  const [playerName, setPlayerName] = useState('Player');
+
+  const [displayedTimes, setDisplayedTimes] = useState({})
+
 
   useEffect(() => {
     let interval;
@@ -41,20 +46,28 @@ const App = () => {
     setPlayerName(event.target.value)
   }
 
+  const endGameTimer = () => {
+    setTimerRunning(false);
+    setTime(0);
+  }
+
+  getBestTimes('ps2').then((times) => {setDisplayedTimes(times)})
+
+
   return (
     <div>
-      
-      {
+      <ScoreBoard displayedTimes={displayedTimes}/>
+      {/*
         !startGame 
         ? <GameSelection chooseGame={chooseGame} playerName={playerName} updatePlayerName={updatePlayerName} />
         : <Game 
             time={time} 
             selectedGame={selectedGame} 
-            setTimerRunning={setTimerRunning} 
+            endGameTimer={endGameTimer} 
             playerName={playerName}
             setStartGame={setStartGame}
           />
-      }
+      */}
       
 
     </div>

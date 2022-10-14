@@ -37,10 +37,14 @@ export const characterSelected = async (selectedGame, character, targetX, target
 
 export const getBestTimes = async (game) => {
   const querySnapshot = await getDocs(collection(db,`${game}-best-times`))
-  const bestTimes = {};
+  ///const bestTimes = {};
+  const bestTimes = [];
 
   querySnapshot.forEach((doc) => {
-    bestTimes[doc.id] = doc.data().players
+    //bestTimes[doc.id] = doc.data().players
+    doc.data().players.forEach((player) => {
+      bestTimes.push([doc.id, player])
+    })
   })
  
   //return querySnapshot;

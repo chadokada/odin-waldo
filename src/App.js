@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import './styles/App.css';
 import GameSelection from 'components/GameSelection';
 import Game from './components/Game';
-import GAMEDATA from 'seedGameData';
+import {SAMPLETIMES} from 'seedGameData';
 import { test, getBestTimes } from './firebase/dbFunctions'
+
+
 
 import ScoreBoard from './components/ScoreBoard';
 
@@ -51,13 +53,13 @@ const App = () => {
     setTime(0);
   }
 
-  getBestTimes('ps2').then((times) => {setDisplayedTimes(times)})
+  //getBestTimes('ps2').then((times) => {setDisplayedTimes(times)})
 
 
   return (
     <div>
-      <ScoreBoard displayedTimes={displayedTimes}/>
-      {/*
+      <ScoreBoard displayedTimes={SAMPLETIMES}/>
+      {
         !startGame 
         ? <GameSelection chooseGame={chooseGame} playerName={playerName} updatePlayerName={updatePlayerName} />
         : <Game 
@@ -67,7 +69,7 @@ const App = () => {
             playerName={playerName}
             setStartGame={setStartGame}
           />
-      */}
+      }
       
 
     </div>

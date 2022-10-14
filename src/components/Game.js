@@ -3,7 +3,7 @@ import 'styles/App.css';
 import GameBoard from 'components/GameBoard';
 import GameStatus from 'components/GameStatus';
 import DropDown from 'components/DropDown';
-import GAMEDATA from 'seedGameData';
+import {GAMEDATA} from 'seedGameData';
 
 import { characterSelected, addCompletionTime } from '../firebase/dbFunctions'
 

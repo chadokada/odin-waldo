@@ -25,4 +25,33 @@ const GAMEDATA = {
   },
 };
 
-export default GAMEDATA;
+const SAMPLETIMES = [
+  /*
+  1000: ['John', 'Jack'],
+  4970: ['Jill'],
+  5130: ['Moe'],
+  5680: ['Curly'],
+  6420: ['Larry', 'Tom', 'Dick', 'Harry'],
+  7050: ['Will'],
+  8400: ['Bill'],
+  9700: ['Phil']
+  */
+  ['1000', 'John'],
+  ['1000', 'Jack'],
+  ['4970', 'Player'],
+  ['5130', 'Player'],
+  ['5680', 'Player'],
+  ['6420', 'Joe Succ'],
+  ['6420', 'Joe Ducc'],
+  ['6420', 'Hong Kong Fukface'],
+  ['6420', 'Player'],
+  ['7050', 'Slick Dick'],
+  ['8400', 'Player'],
+  ['9700', 'Hong Kong Fukface']
+]
+
+
+export {GAMEDATA, SAMPLETIMES}
+
+
+//export default GAMEDATA;

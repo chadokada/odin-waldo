@@ -131,3 +131,31 @@ select{
 .selection-img{
   height: 40px;
 }
+
+/* DELETE AFTER FINISHING SCOREBOARD STYLING */
+table,
+th,
+tr,
+td{
+  border: 1px solid white;
+}
+
+.scoreboard-container{
+  height: fit-content;
+  width: fit-content;
+
+  background-color: black;
+
+  z-index: 200;
+  
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;  
+}
+
+.table-col-1{
+  text-align: center;
+}

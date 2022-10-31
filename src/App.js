@@ -7,7 +7,7 @@ import { test, getBestTimes } from './firebase/dbFunctions'
 
 
 
-import ScoreBoard from './components/ScoreBoard';
+import TimeBoard from './components/TimeBoard';
 
 
 const App = () => {
@@ -19,7 +19,8 @@ const App = () => {
   const [time, setTime] = useState(0);
   const [timerRunning, setTimerRunning] = useState(false);
   const [playerName, setPlayerName] = useState('Player');
-
+  const [showTimeBoard, setShowTimeBoard] = useState(false);
+  const [timeBoardTop, setTimeBoardTop] = useState(0);
   const [displayedTimes, setDisplayedTimes] = useState({})
 
 
@@ -53,12 +54,24 @@ const App = () => {
     setTime(0);
   }
 
-  //getBestTimes('ps2').then((times) => {setDisplayedTimes(times)})
+  const displayTimeBoard = (currentTop, display=true) => {
+    setShowTimeBoard(display);
+    setTimeBoardTop(currentTop);
+  }
 
+  //getBestTimes('ps2').then((times) => {setDisplayedTimes(times)})
 
   return (
     <div>
-      <ScoreBoard displayedTimes={SAMPLETIMES}/>
+      {showTimeBoard
+        ? <TimeBoard 
+            playerName='Juan Doe' 
+            time='6420' 
+            setShowTimeBoard={setShowTimeBoard}
+            displayedTimes={SAMPLETIMES}/>
+        : null
+      }
+      
       {
         !startGame 
         ? <GameSelection chooseGame={chooseGame} playerName={playerName} updatePlayerName={updatePlayerName} />
@@ -67,6 +80,7 @@ const App = () => {
             selectedGame={selectedGame} 
             endGameTimer={endGameTimer} 
             playerName={playerName}
+            displayTimeBoard={displayTimeBoard}
             setStartGame={setStartGame}
           />
       }

@@ -7,7 +7,7 @@ import {GAMEDATA} from 'seedGameData';
 
 import { characterSelected, addCompletionTime } from '../firebase/dbFunctions'
 
-const Game = ({ time, selectedGame, endGameTimer, playerName, setStartGame }) => {
+const Game = ({ time, selectedGame, endGameTimer, playerName, displayTimeBoard,setStartGame }) => {
 
   //console.log('Welcome: ', playerName)
 
@@ -87,7 +87,10 @@ const Game = ({ time, selectedGame, endGameTimer, playerName, setStartGame }) =>
     console.log(`time in milliseconds: ${time}`)
     console.log(`time formatted: ${formatTime(time)}`)
 
-    setStartGame(false)    
+    const scrollTop = document.documentElement.scrollTop;
+    displayTimeBoard(scrollTop);
+
+    //setStartGame(false)    
   }
 
 

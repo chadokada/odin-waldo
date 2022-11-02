@@ -1,21 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { SAMPLETIMES } from 'seedGameData';
 import 'styles/App.css';
 import formatTime from '../utils/forrmatTime';
+import { getBestTimes } from '../firebase/dbFunctions';
 
-const TimeBoard = ( {playerName, time, setShowTimeBoard ,displayedTimes} ) => {
-  
-  //onsole.table(displayedTimes)
-  //console.log('**************************************')
 
-  const testObj = {
-    1: 'dddog',
-    2: 'cat'
-  }
+const TimeBoard = ( {player, displayedTimes, setStartGame, setShowTimeBoard} ) => {
 
   const newGame = () => {
-    
     setShowTimeBoard(false);
+    setStartGame(false);
   }
 
   return (
@@ -28,7 +21,7 @@ const TimeBoard = ( {playerName, time, setShowTimeBoard ,displayedTimes} ) => {
         <span>Best Times</span>
       </div>
       
-      <div className='timeboard-player-time'>Your Time: {formatTime(time)}</div>
+      <div className='timeboard-player-time'>Your Time: {formatTime(player.time)}</div>
 
       <table className='timeboard-table'>
         <thead>

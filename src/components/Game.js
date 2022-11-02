@@ -7,9 +7,7 @@ import {GAMEDATA} from 'seedGameData';
 
 import { characterSelected, addCompletionTime } from '../firebase/dbFunctions'
 
-const Game = ({ time, selectedGame, endGameTimer, playerName, displayTimeBoard,setStartGame }) => {
-
-  //console.log('Welcome: ', playerName)
+const Game = ({ time, selectedGame, setTimerRunning, playerName, setShowTimeBoard, setScrollPosition }) => {
 
   const gameData = GAMEDATA[selectedGame];
 
@@ -18,18 +16,14 @@ const Game = ({ time, selectedGame, endGameTimer, playerName, displayTimeBoard,s
     menuXY={[0, 0]} 
     visibility='hidden'
     characters={gameData.characters}
-    //menuXY={[600,200]}
-    //visibility='visible'
-  />
-  
-
+  />;
 
   // Game state
 
-  let [dropDown, setDropDown] = useState(hiddenDropDown)
-  let [correctGuesses, setCorrectGuesses] = useState([])
-  let [gameEnded, setGameEnded] = useState(false)
-
+  let [dropDown, setDropDown] = useState(hiddenDropDown);
+  let [correctGuesses, setCorrectGuesses] = useState([]);
+  let [gameEnded, setGameEnded] = useState(false);
+  
   const handleGameboardClick = (event) => {
     const targetX = event.pageX - event.target.offsetLeft;
     const targetY = event.pageY - event.target.offsetTop
@@ -46,6 +40,11 @@ const Game = ({ time, selectedGame, endGameTimer, playerName, displayTimeBoard,s
         />
     )
   }
+  
+  const handleScroll = () =>{
+    const position = window.pageYOffset;
+    setScrollPosition(position);    
+  };
 
   // DELETE WHEN DONE TESTING
   const formatTime = (milliseconds) => {
@@ -78,24 +77,22 @@ const Game = ({ time, selectedGame, endGameTimer, playerName, displayTimeBoard,s
   }
 
   const endGame = () => {
-    endGameTimer();
+    setTimerRunning(false);
 
     addCompletionTime(selectedGame, playerName, time);
-    //addCompletionTime(selectedGame, playerName, 6420);
 
+    /*
     console.log('you won')
     console.log(`time in milliseconds: ${time}`)
     console.log(`time formatted: ${formatTime(time)}`)
+    */
 
-    const scrollTop = document.documentElement.scrollTop;
-    displayTimeBoard(scrollTop);
-
+    //displayTimeBoard(scrollPosition);
+    setShowTimeBoard(true);
     //setStartGame(false)    
   }
 
-
   useEffect(() => {
-
     if (correctGuesses.length > 0) { 
       const latestGuess = correctGuesses[correctGuesses.length - 1];
       const characterIcon = document.getElementById(`${latestGuess}-icon`);
@@ -108,6 +105,13 @@ const Game = ({ time, selectedGame, endGameTimer, playerName, displayTimeBoard,s
     };
   }, [correctGuesses])
 
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <div className="App">

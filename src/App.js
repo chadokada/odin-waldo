@@ -9,10 +9,7 @@ import { test, getBestTimes } from './firebase/dbFunctions'
 
 import TimeBoard from './components/TimeBoard';
 
-
 const App = () => {
-
-  test()
 
   const [startGame, setStartGame] = useState(false);
   const [selectedGame, setSelectedGame] = useState('');
@@ -20,12 +17,32 @@ const App = () => {
   const [timerRunning, setTimerRunning] = useState(false);
   const [playerName, setPlayerName] = useState('Player');
   const [showTimeBoard, setShowTimeBoard] = useState(false);
-  const [timeBoardTop, setTimeBoardTop] = useState(0);
-  const [displayedTimes, setDisplayedTimes] = useState({})
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [displayedTimes, setDisplayedTimes] = useState({});
 
+
+  const chooseGame = (event) => {
+    setSelectedGame(event.target.getAttribute('alt'));
+    setStartGame(true);
+    setTime(0);
+    setTimerRunning(true);
+    document.querySelector('.game-selection-container').setAttribute('visibility', 'hidden'); 
+  };
+
+  const updatePlayerName = (event) => {
+    setPlayerName(event.target.value)
+  };
+
+  const centerTimeBoard = () => {
+    const windowHeight = window.innerHeight;
+    const timeBoardDiv = document.querySelector('.timeboard-container');
+    const timeBoardTopY = (windowHeight - timeBoardDiv.offsetHeight) / 2 + scrollPosition;
+    timeBoardDiv.style.top = `${timeBoardTopY}px`;
+  };
 
   useEffect(() => {
     let interval;
+
     if (timerRunning) {
       interval = setInterval(() => {
         setTime((prevTime) => prevTime + 10);
@@ -33,42 +50,34 @@ const App = () => {
     } else if (!timerRunning) {
       clearInterval(interval);
     }
+
     return () => clearInterval(interval);
+
   }, [timerRunning]);
 
+  useEffect(() => {
+    if (showTimeBoard === true) {
+      centerTimeBoard();
+    }
+
+  }, [showTimeBoard]);
 
 
-  const chooseGame = (event) => {
-    setSelectedGame(event.target.getAttribute('alt'));
-    setStartGame(true);
-    setTimerRunning(true);
-    document.querySelector('.game-selection-container').setAttribute('visibility', 'hidden') 
-  }
-
-  const updatePlayerName = (event) => {
-    setPlayerName(event.target.value)
-  }
-
-  const endGameTimer = () => {
-    setTimerRunning(false);
-    setTime(0);
-  }
-
-  const displayTimeBoard = (currentTop, display=true) => {
-    setShowTimeBoard(display);
-    setTimeBoardTop(currentTop);
-  }
-
-  //getBestTimes('ps2').then((times) => {setDisplayedTimes(times)})
+  getBestTimes(selectedGame).then((times) => {setDisplayedTimes(times)})
 
   return (
     <div>
       {showTimeBoard
         ? <TimeBoard 
-            playerName='Juan Doe' 
-            time='6420' 
+            player={{
+              name : playerName,
+              time : time
+            }} 
+            selectedGame={selectedGame} 
+            displayedTimes={displayedTimes}
+            setStartGame={setStartGame}
             setShowTimeBoard={setShowTimeBoard}
-            displayedTimes={SAMPLETIMES}/>
+            />
         : null
       }
       
@@ -78,10 +87,10 @@ const App = () => {
         : <Game 
             time={time} 
             selectedGame={selectedGame} 
-            endGameTimer={endGameTimer} 
+            setTimerRunning={setTimerRunning} 
             playerName={playerName}
-            displayTimeBoard={displayTimeBoard}
-            setStartGame={setStartGame}
+            setShowTimeBoard={setShowTimeBoard}
+            setScrollPosition={setScrollPosition}
           />
       }
       

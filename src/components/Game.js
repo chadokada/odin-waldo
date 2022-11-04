@@ -46,7 +46,9 @@ const Game = ({ time, selectedGame, setTimerRunning, playerName, setShowTimeBoar
     setScrollPosition(position);    
   };
 
+  // ***********************************************************************************
   // DELETE WHEN DONE TESTING
+  
   const formatTime = (milliseconds) => {
     // Takes milliseconds and returns a string forrmatted mm:ss:sss
     const mm = ("0" + Math.floor((milliseconds / 60000) % 60)).slice(-2);
@@ -56,6 +58,7 @@ const Game = ({ time, selectedGame, setTimerRunning, playerName, setShowTimeBoar
     return `${mm}:${ss}:${sss}`;
   }
 
+  // ***********************************************************************************
 
   // Methods for DropDown
 
@@ -69,8 +72,8 @@ const Game = ({ time, selectedGame, setTimerRunning, playerName, setShowTimeBoar
   }
 
   const checkInput = async (character, targetX, targetY) => {
-    const selected = await characterSelected(selectedGame, character, targetX, targetY);
-    
+    //const selected = await characterSelected(selectedGame, character, targetX, targetY);
+    const selected = true;
     if (selected) {
       setCorrectGuesses([...correctGuesses, character]);
     }
@@ -78,19 +81,9 @@ const Game = ({ time, selectedGame, setTimerRunning, playerName, setShowTimeBoar
 
   const endGame = () => {
     setTimerRunning(false);
-
     addCompletionTime(selectedGame, playerName, time);
-
-    /*
-    console.log('you won')
-    console.log(`time in milliseconds: ${time}`)
-    console.log(`time formatted: ${formatTime(time)}`)
-    */
-
-    //displayTimeBoard(scrollPosition);
-    setShowTimeBoard(true);
-    //setStartGame(false)    
-  }
+    setShowTimeBoard(true);   
+  };
 
   useEffect(() => {
     if (correctGuesses.length > 0) { 
@@ -114,7 +107,7 @@ const Game = ({ time, selectedGame, setTimerRunning, playerName, setShowTimeBoar
   }, []);
 
   return (
-    <div className="App">
+    <div className="game">
       <GameStatus time={time} characters={gameData.characters} />
       {dropDown}
       

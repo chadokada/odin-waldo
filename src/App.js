@@ -58,15 +58,19 @@ const App = () => {
   useEffect(() => {
     if (showTimeBoard === true) {
       centerTimeBoard();
+      document.querySelector('body').style.overflow = 'hidden';
     }
 
   }, [showTimeBoard]);
 
+  useEffect(() => {
+    //getBestTimes(selectedGame).then((times) => {setDisplayedTimes(times)})
+    setDisplayedTimes(SAMPLETIMES[selectedGame])
 
-  getBestTimes(selectedGame).then((times) => {setDisplayedTimes(times)})
+  }, [selectedGame])
 
   return (
-    <div>
+    <div className='App'>
       {showTimeBoard
         ? <TimeBoard 
             player={{

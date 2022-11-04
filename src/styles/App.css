@@ -1,4 +1,3 @@
-
 .App {
   display: flex;
   flex-flow: column;
@@ -26,7 +25,9 @@ select{
 
 .game-selection-container{
   width: 100vw;
-  height: 100vh;
+  /*
+  height: fit-content;
+  */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -35,12 +36,17 @@ select{
   z-index: 100;
 
   background-color: rgba(150, 150, 150, 0.8);
+
+  max-height: 975px
 }
 
 .game-selection-menu-container{
-  width: 75%;
+  max-width: 75%;
   height: fit-content;
   border: 2px solid white;
+
+  
+  max-height: 100vh
 }
 
 .board-selection-img-container{
@@ -48,10 +54,15 @@ select{
   flex-wrap: wrap;
   justify-content: space-evenly;
   margin-bottom: 10px;
+
+  max-height: 100vh;
 }
 
 .board-selection-img{
-  width: calc(100% / 3.05)
+  /*
+  width: calc(100% / 3.05);
+  */
+  max-height: 100vh;
 }
 
 .board-selection-img:hover{
@@ -94,7 +105,6 @@ select{
   height: 85px;
 }
 
-
 /* Styles for DropDown component */
 
 .character-select-dropdown{
@@ -132,15 +142,7 @@ select{
   height: 40px;
 }
 
-/* DELETE AFTER FINISHING timeboard STYLING */
-/*
-table,
-th,
-tr,
-td{
-  border: 1px solid white;
-}
-*/
+/* Styles for TimeBoard*/
 
 .timeboard-container,
 .timeboard-title{
@@ -154,9 +156,6 @@ td{
   right: 0;
   top: 0;
   bottom: 0;
-  /*
-  margin: auto; 
-  */
   margin-left: auto;
   margin-right: auto;
 
@@ -166,7 +165,8 @@ td{
   text-align: center;
   gap: 10px;
   height: fit-content;
-  width: fit-content;
+  min-width: 490px;
+  max-width: fit-content;
   overflow: hidden;
   box-sizing: border-box;
   background-color: rgb(50, 50, 50);

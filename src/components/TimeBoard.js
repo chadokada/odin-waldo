@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import 'styles/App.css';
 import formatTime from '../utils/forrmatTime';
 import { getBestTimes } from '../firebase/dbFunctions';
 
 
-const TimeBoard = ( {player, displayedTimes, setStartGame, setShowTimeBoard} ) => {
+const TimeBoard = ( {player, selectedGame, displayedTimes, setStartGame, setShowTimeBoard} ) => {
 
   const newGame = () => {
     setShowTimeBoard(false);
     setStartGame(false);
-  }
+  };
 
   return (
     <div className='timeboard-container'>
       
       <div className='timeboard-title'>
         <div className='timeboard-logo-container'>
-          <img className='timeboard-logo' alt='logo' src={require('../assets/logos/ps3logo.png')}></img>
+          <img className='timeboard-logo' alt='logo' src={require(`../assets/logos/${selectedGame}logo.png`)}></img>
         </div>
         <span>Best Times</span>
       </div>

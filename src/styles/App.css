@@ -29,6 +29,7 @@ select{
   height: fit-content;
   */
   display: flex;
+  flex-flow: column;
   justify-content: center;
   align-items: center;
 
@@ -37,16 +38,18 @@ select{
 
   background-color: rgba(150, 150, 150, 0.8);
 
-  max-height: 975px
+  /*height: 975px;*/
+  height: 100vh;
 }
 
 .game-selection-menu-container{
   max-width: 75%;
+  /*
   height: fit-content;
+  */
   border: 2px solid white;
 
-  
-  max-height: 100vh
+  height: 100vh;
 }
 
 .board-selection-img-container{
@@ -54,15 +57,17 @@ select{
   flex-wrap: wrap;
   justify-content: space-evenly;
   margin-bottom: 10px;
-
-  max-height: 100vh;
+  gap: 5px;
+  
+  height: 95%;
 }
 
 .board-selection-img{
-  /*
-  width: calc(100% / 3.05);
-  */
-  max-height: 100vh;
+  
+  
+  max-width: calc(100% / 3.05);
+  
+  max-height: 100%;
 }
 
 .board-selection-img:hover{

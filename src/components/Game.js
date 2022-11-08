@@ -5,9 +5,9 @@ import GameStatus from 'components/GameStatus';
 import DropDown from 'components/DropDown';
 import {GAMEDATA} from 'seedGameData';
 
-import { characterSelected, addCompletionTime } from '../firebase/dbFunctions'
+import { characterSelected } from '../firebase/dbFunctions'
 
-const Game = ({ time, selectedGame, setTimerRunning, playerName, setShowTimeBoard, setScrollPosition }) => {
+const Game = ({ time, selectedGame, setTimerRunning, setShowSubmitScore, setScrollPosition }) => {
 
   const gameData = GAMEDATA[selectedGame];
 
@@ -72,8 +72,8 @@ const Game = ({ time, selectedGame, setTimerRunning, playerName, setShowTimeBoar
   }
 
   const checkInput = async (character, targetX, targetY) => {
-    //const selected = await characterSelected(selectedGame, character, targetX, targetY);
-    const selected = true;
+    const selected = await characterSelected(selectedGame, character, targetX, targetY);
+    //const selected = true;
     if (selected) {
       setCorrectGuesses([...correctGuesses, character]);
     }
@@ -81,8 +81,7 @@ const Game = ({ time, selectedGame, setTimerRunning, playerName, setShowTimeBoar
 
   const endGame = () => {
     setTimerRunning(false);
-    addCompletionTime(selectedGame, playerName, time);
-    setShowTimeBoard(true);   
+    setShowSubmitScore(true);   
   };
 
   useEffect(() => {

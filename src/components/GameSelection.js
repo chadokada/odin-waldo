@@ -2,25 +2,11 @@ import React, {useState, useEffect} from 'react';
 import debounce from '../utils/debounce';
 import 'styles/App.css';
 
-const GameSelection = ({ chooseGame, playerName, updatePlayerName }) => {
-  
-  /*
-  const [dimensions, setDimensions] = useState({
-    height: window.innerHeight,
-    width: window.innerWidth
-  })
-  */
+const GameSelection = ({ chooseGame }) => {
 
   useEffect(() => {
     const debouncedHandleResize = () => {debounce(function handleResize(){
-      console.log(`Current window: ${window.innerWidth}x${window.innerHeight}`)
-
-      /*
-      setDimensions({
-        height: window.innerHeight,
-        width: window.innerWidth
-      })
-      */   
+      console.log(`Current window: ${window.innerWidth}x${window.innerHeight}`) 
     }, 1000)}
 
     window.addEventListener('resize', debouncedHandleResize)
@@ -52,11 +38,13 @@ const GameSelection = ({ chooseGame, playerName, updatePlayerName }) => {
             onClick={chooseGame}
           />
         </div> 
-      {/*</div>*/}
+      {/*
+      </div>
       <div className='player-name-input-row'>
           <label htmlFor='player-name'>Your Name:</label>
           <input id='player-name' onChange={updatePlayerName} value={playerName}></input>
         </div> 
+      */}
     </div>
   )
 };

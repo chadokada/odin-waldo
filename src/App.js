@@ -2,24 +2,23 @@ import React, { useEffect, useState } from 'react';
 import './styles/App.css';
 import GameSelection from 'components/GameSelection';
 import Game from './components/Game';
+import LeaderBoard from './components/LeaderBoard';
+import SubmitScore from './components/SubmitScore';
 import {SAMPLETIMES} from 'seedGameData';
 import { test, getBestTimes } from './firebase/dbFunctions'
 
 
-
-import TimeBoard from './components/TimeBoard';
-
 const App = () => {
 
   const [startGame, setStartGame] = useState(false);
-  const [selectedGame, setSelectedGame] = useState('');
+  const [selectedGame, setSelectedGame] = useState(''); //set to blank when done
   const [time, setTime] = useState(0);
   const [timerRunning, setTimerRunning] = useState(false);
   const [playerName, setPlayerName] = useState('Player');
-  const [showTimeBoard, setShowTimeBoard] = useState(false);
+  const [showLeaderBoard, setShowLeaderBoard] = useState(false); //set to false when done
+  const [showSubmitScore, setShowSubmitScore] = useState(false); //set to false when done
   const [scrollPosition, setScrollPosition] = useState(0);
-  const [displayedTimes, setDisplayedTimes] = useState({});
-
+  const [displayedTimes, setDisplayedTimes] = useState({}); //set to empy obj when done
 
   const chooseGame = (event) => {
     setSelectedGame(event.target.getAttribute('alt'));
@@ -27,17 +26,11 @@ const App = () => {
     setTime(0);
     setTimerRunning(true);
     document.querySelector('.game-selection-container').setAttribute('visibility', 'hidden'); 
+    document.querySelector('body').style.overflow = 'auto';
   };
 
   const updatePlayerName = (event) => {
     setPlayerName(event.target.value)
-  };
-
-  const centerTimeBoard = () => {
-    const windowHeight = window.innerHeight;
-    const timeBoardDiv = document.querySelector('.timeboard-container');
-    const timeBoardTopY = (windowHeight - timeBoardDiv.offsetHeight) / 2 + scrollPosition;
-    timeBoardDiv.style.top = `${timeBoardTopY}px`;
   };
 
   useEffect(() => {
@@ -56,23 +49,28 @@ const App = () => {
   }, [timerRunning]);
 
   useEffect(() => {
-    if (showTimeBoard === true) {
-      centerTimeBoard();
-      document.querySelector('body').style.overflow = 'hidden';
+    if (showLeaderBoard === true){
+      getBestTimes(selectedGame).then((times) => {setDisplayedTimes(times)});
     }
-
-  }, [showTimeBoard]);
-
-  useEffect(() => {
-    //getBestTimes(selectedGame).then((times) => {setDisplayedTimes(times)})
-    setDisplayedTimes(SAMPLETIMES[selectedGame])
-
-  }, [selectedGame])
+    
+    //setDisplayedTimes(SAMPLETIMES[selectedGame])
+  }, [showLeaderBoard]);
 
   return (
     <div className='App'>
-      {showTimeBoard
-        ? <TimeBoard 
+      {showSubmitScore
+        ? <SubmitScore 
+            time={1001}
+            setPlayerName={setPlayerName}
+            selectedGame={selectedGame}
+            scrollPosition={scrollPosition}
+            setShowSubmitScore={setShowSubmitScore}
+            setShowLeaderBoard={setShowLeaderBoard}
+          />
+        : null
+      }
+      {showLeaderBoard
+        ? <LeaderBoard 
             player={{
               name : playerName,
               time : time
@@ -80,7 +78,8 @@ const App = () => {
             selectedGame={selectedGame} 
             displayedTimes={displayedTimes}
             setStartGame={setStartGame}
-            setShowTimeBoard={setShowTimeBoard}
+            setShowLeaderBoard={setShowLeaderBoard}
+            scrollPosition={scrollPosition}
             />
         : null
       }
@@ -92,8 +91,8 @@ const App = () => {
             time={time} 
             selectedGame={selectedGame} 
             setTimerRunning={setTimerRunning} 
-            playerName={playerName}
-            setShowTimeBoard={setShowTimeBoard}
+            setShowSubmitScore={setShowSubmitScore}
+            setShowLeaderBoard={setShowLeaderBoard}
             setScrollPosition={setScrollPosition}
           />
       }

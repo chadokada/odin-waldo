@@ -5,7 +5,7 @@ import Game from './components/Game';
 import LeaderBoard from './components/LeaderBoard';
 import SubmitScore from './components/SubmitScore';
 import {SAMPLETIMES} from 'seedGameData';
-import { test, getBestTimes } from './firebase/dbFunctions'
+import { getBestTimes } from './firebase/dbFunctions'
 
 
 const App = () => {
@@ -14,7 +14,7 @@ const App = () => {
   const [selectedGame, setSelectedGame] = useState(''); //set to blank when done
   const [time, setTime] = useState(0);
   const [timerRunning, setTimerRunning] = useState(false);
-  const [playerName, setPlayerName] = useState('Player');
+  const [playerName, setPlayerName] = useState('Your Name');
   const [showLeaderBoard, setShowLeaderBoard] = useState(false); //set to false when done
   const [showSubmitScore, setShowSubmitScore] = useState(false); //set to false when done
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -45,27 +45,31 @@ const App = () => {
     }
 
     return () => clearInterval(interval);
-
   }, [timerRunning]);
 
   useEffect(() => {
-    if (showLeaderBoard === true){
+    if (showSubmitScore === false && time !== 0){
       getBestTimes(selectedGame).then((times) => {setDisplayedTimes(times)});
     }
-    
     //setDisplayedTimes(SAMPLETIMES[selectedGame])
-  }, [showLeaderBoard]);
+  }, [showSubmitScore]);
+
+  useEffect(() => {
+    if (showSubmitScore === false && time !== 0){
+      setShowLeaderBoard(true);
+    }
+  }, [displayedTimes])
 
   return (
     <div className='App'>
       {showSubmitScore
         ? <SubmitScore 
-            time={1001}
+            time={time}
+            playerName={playerName}
             setPlayerName={setPlayerName}
             selectedGame={selectedGame}
             scrollPosition={scrollPosition}
             setShowSubmitScore={setShowSubmitScore}
-            setShowLeaderBoard={setShowLeaderBoard}
           />
         : null
       }

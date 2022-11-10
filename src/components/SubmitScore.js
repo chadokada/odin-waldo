@@ -5,12 +5,12 @@ import { addCompletionTime } from '../firebase/dbFunctions'
 
 const SubmitScore = ({
   time, 
+  playerName,
   setPlayerName, 
   selectedGame, 
   scrollPosition, 
   setShowSubmitScore, 
-  setShowLeaderBoard
-}) => {
+  }) => {
   
   const centerSubmitScore = () => {
     const windowHeight = window.innerHeight;
@@ -23,11 +23,16 @@ const SubmitScore = ({
     setShowSubmitScore(false);
   }
 
+  const handleInputChange = (event) => {
+    const inputName = event.target.value;
+  }
+
   const handleSubmit = () => {
-    const playerName = document.querySelector('#player-name').value;
-    addCompletionTime(selectedGame, playerName, time);
+    const playerNameValue = document.querySelector('#player-name').value;
+    setPlayerName(playerNameValue);
+    addCompletionTime(selectedGame, playerNameValue, time);
+    console.log(typeof time)
     setShowSubmitScore(false);
-    setShowLeaderBoard(true);
   }
 
   useEffect(() => {
@@ -44,7 +49,7 @@ const SubmitScore = ({
       <div className='submitscore-form'>
         <h4>Enter your name and submit your score to the global leaderboard!</h4>
         <label htmlFor='player-name'>Name:</label>
-        <input id='player-name'></input>
+        <input id='player-name' defaultValue={playerName}></input>
       </div>
 
       <div className='submitscore-buttons'>

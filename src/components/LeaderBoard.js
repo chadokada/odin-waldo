@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import 'styles/leaderboard.css';
 import formatTime from '../utils/forrmatTime';
+import { getBestTimes } from '../firebase/dbFunctions';
 
 const LeaderBoard = ({
   player, 
@@ -29,14 +30,12 @@ const LeaderBoard = ({
 
   return (
     <div className='leaderboard-container'>
-      
       <div className='leaderboard-title'>
         <div className='leaderboard-logo-container'>
           <img className='leaderboard-logo' alt='logo' src={require(`../assets/logos/${selectedGame}logo.png`)}></img>
         </div>
         <span>Best Times</span>
       </div>
-
       <table className='leaderboard-table'>
         <thead>
           <tr>
@@ -47,7 +46,6 @@ const LeaderBoard = ({
             <th className='table-col-3'>Time</th>
           </tr>
         </thead>
-        
         <tbody>
           {displayedTimes.map((playerTime, index) => {
             if(index < 10) {

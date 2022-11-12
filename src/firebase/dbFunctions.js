@@ -1,6 +1,15 @@
 import { initializeApp } from 'firebase/app';
 import { getFirebaseConfig } from './firebase-config';
-import { getFirestore, collection, doc, getDoc, setDoc, getDocs, arrayUnion } from 'firebase/firestore';
+import { 
+  getFirestore, 
+  collection, 
+  doc, 
+  getDoc, 
+  setDoc, 
+  getDocs, 
+  arrayUnion, 
+  query,
+} from 'firebase/firestore';
 
 const firebaseAppConfig = getFirebaseConfig();
 const firebaseApp = initializeApp(firebaseAppConfig);
@@ -16,7 +25,7 @@ export async function getCharCoords (selectedGame, character) {
 
   } else {
     console.log('No such doc')
-  }
+  };
 }
 
 export const characterSelected = async (selectedGame, character, targetX, targetY) => {
@@ -32,21 +41,45 @@ export const characterSelected = async (selectedGame, character, targetX, target
   } else {
     return false;
   }
-}
+};
 
+const queryBestTimes = async (game) => {
+  const q = query(collection(db,`${game}-best-times`));
 
-export const getBestTimes = async (game) => {
-  const querySnapshot = await getDocs(collection(db,`${game}-best-times`))
-  const bestTimes = [];
+  const querySnapshot = await getDocs(q);
+  const bestTimes = {};
 
   querySnapshot.forEach((doc) => {
-    doc.data().players.forEach((player) => {
-      bestTimes.push([doc.id, player])
-    })
-  })
- 
+    bestTimes[parseInt(doc.id)] = doc.data().players;
+  });
+
   return bestTimes;
-}
+};
+
+const sortIntegerKeys = (keys) => {
+  const intKeys = keys.map((a) => {return(parseInt(a))});
+  const sortedKeys = intKeys.sort(function(a, b){
+    return a - b;
+  });
+
+  return sortedKeys.map((key) => {return(key.toString())});
+};
+
+export const getBestTimes = async (game) => {
+  const bestTimes = await queryBestTimes(game);
+  const keys = sortIntegerKeys(Object.keys(bestTimes));
+  const sortedBestTimes = [];
+
+  for (const key of keys) {
+    const players = bestTimes[key];
+    
+    for (const player of players) {
+      sortedBestTimes.push([key, player]);
+    }
+  };
+
+  return sortedBestTimes;
+};
 
 export const addCompletionTime = async (game, playerName, time) => {
   const bestTimeRef = doc(db, `${game}-best-times`, `${time}`);
@@ -55,10 +88,8 @@ export const addCompletionTime = async (game, playerName, time) => {
     await setDoc(bestTimeRef, {
       players : arrayUnion(playerName)
     }, {merge: true})
-    
   } 
   catch (error) {
     console.error('There was an error: ', error)
-  }
-}
-
+  };
+};

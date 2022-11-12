@@ -58,11 +58,22 @@ table{
 table{
   border-spacing: 0px;
   align-self: center;
+
+  width: 100%;
 }
 
 .table-col-1,
 .table-col-3{
-  text-align: center;
+  width: 5rem;
+}
+
+.table-col-1{
+  text-align: left;
+  padding-left: 1rem;
+}
+
+.table-col-3{
+  padding-right: 1rem;
 }
 
 .table-col-2{
@@ -71,7 +82,7 @@ table{
 }
 
 .table-col-blank{
-  width: 10%;
+  width: 5%;
 }
 
 thead,

@@ -5,7 +5,7 @@ import GameStatus from 'components/GameStatus';
 import DropDown from 'components/DropDown';
 import {GAMEDATA} from 'seedGameData';
 
-import { characterSelected, getBestTimes } from '../firebase/dbFunctions'
+import { characterSelected } from '../firebase/dbFunctions'
 
 const Game = ({ time, selectedGame, setTimerRunning, setShowSubmitScore, setScrollPosition }) => {
 
@@ -39,26 +39,12 @@ const Game = ({ time, selectedGame, setTimerRunning, setShowSubmitScore, setScro
         handleMenuClick={handleMenuClick}
         />
     )
-  }
+  };
   
   const handleScroll = () =>{
     const position = window.pageYOffset;
     setScrollPosition(position);    
   };
-
-  // ***********************************************************************************
-  // DELETE WHEN DONE TESTING
-  
-  const formatTime = (milliseconds) => {
-    // Takes milliseconds and returns a string forrmatted mm:ss:sss
-    const mm = ("0" + Math.floor((milliseconds / 60000) % 60)).slice(-2);
-    const ss = ("0" + Math.floor((milliseconds / 1000) % 60)).slice(-2);
-    const sss = ("0" + ((milliseconds / 10) % 100)).slice(-2);
-
-    return `${mm}:${ss}:${sss}`;
-  }
-
-  // ***********************************************************************************
 
   // Methods for DropDown
 
@@ -69,15 +55,14 @@ const Game = ({ time, selectedGame, setTimerRunning, setShowSubmitScore, setScro
 
     setDropDown(hiddenDropDown);
     checkInput(character, targetX, targetY);
-  }
+  };
 
   const checkInput = async (character, targetX, targetY) => {
     const selected = await characterSelected(selectedGame, character, targetX, targetY);
-    //const selected = true;
     if (selected) {
       setCorrectGuesses([...correctGuesses, character]);
     }
-  }
+  };
 
   const endGame = () => {
     setTimerRunning(false);
@@ -95,7 +80,7 @@ const Game = ({ time, selectedGame, setTimerRunning, setShowSubmitScore, setScro
       endGame()
       setGameEnded(true)
     };
-  }, [correctGuesses])
+  }, [correctGuesses]);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -109,13 +94,11 @@ const Game = ({ time, selectedGame, setTimerRunning, setShowSubmitScore, setScro
     <div className="game">
       <GameStatus time={time} characters={gameData.characters} />
       {dropDown}
-      
       {
         !gameEnded 
         ? <GameBoard gameboardSrc={gameData.src} handleGameboardClick={handleGameboardClick}/> 
         : <GameBoard gameboardSrc={gameData.src}/>
       }
-
     </div>
   );
 }

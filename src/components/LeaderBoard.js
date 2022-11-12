@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import 'styles/leaderboard.css';
 import formatTime from '../utils/forrmatTime';
-import { getBestTimes } from '../firebase/dbFunctions';
 
 const LeaderBoard = ({
   player, 
@@ -34,21 +33,25 @@ const LeaderBoard = ({
         <div className='leaderboard-logo-container'>
           <img className='leaderboard-logo' alt='logo' src={require(`../assets/logos/${selectedGame}logo.png`)}></img>
         </div>
-        <span>Best Times</span>
+        <span>Leaderboard</span>
       </div>
       <table className='leaderboard-table'>
         <thead>
           <tr>
             <th className='table-col-1'>#</th>
-            <th className='table-col-blank'></th>
+            {/*
+            th className='table-col-blank'></th>
+            */}
             <th className='table-col-2'>Name</th>
+            {/* 
             <th className='table-col-blank'></th>
+            */}
             <th className='table-col-3'>Time</th>
           </tr>
         </thead>
         <tbody>
           {displayedTimes.map((playerTime, index) => {
-            if(index < 10) {
+            if(index < 20) {
               var scoreRow = '';
               index % 2 === 0 ? scoreRow = 'even' : scoreRow = 'odd';
 
@@ -60,13 +63,16 @@ const LeaderBoard = ({
                   animationDuration: '3s',
                 }
               } 
-
               return(
                 <tr key={index+1} className={`scoreRow-${scoreRow}`} style={animationStyle}>
                   <td className='table-col-1'>{index + 1}</td>
-                  <th className='table-col-blank'></th>
+                  {/*
+                  <td className='table-col-blank'></td>
+                  */}
                   <td className='table-col-2'>{playerTime[1]}</td>
-                  <th className='table-col-blank'></th>
+                  {/*
+                  <td className='table-col-blank'></td>
+                  */}
                   <td className='table-col-3'>{formatTime(playerTime[0])}</td>
                 </tr>
               )

@@ -26,7 +26,7 @@ const SubmitScore = ({
   const handleSubmit = () => {
     const playerNameValue = document.querySelector('#player-name').value;
     setPlayerName(playerNameValue);
-    //addCompletionTime(selectedGame, playerNameValue, time);
+    addCompletionTime(selectedGame, playerNameValue, time);
     setShowSubmitScore(false);
   };
 

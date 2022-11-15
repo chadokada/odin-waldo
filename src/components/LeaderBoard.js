@@ -54,14 +54,14 @@ const LeaderBoard = ({
             if(index < 20) {
               var scoreRow = '';
               index % 2 === 0 ? scoreRow = 'even' : scoreRow = 'odd';
-
               var animationStyle = {};
-              if(playerTime[1] === player.name && playerTime[0] === player.time){
+
+              if(playerTime[1] === player.name && parseInt(playerTime[0]) === player.time){
                 animationStyle = {
                   animationName: 'playertime',
                   animationDelay: '0.25s',
                   animationDuration: '3s',
-                }
+                } 
               } 
               return(
                 <tr key={index+1} className={`scoreRow-${scoreRow}`} style={animationStyle}>
@@ -82,7 +82,7 @@ const LeaderBoard = ({
       </table>
       
       <div className='leaderboard-buttons'>
-        <button onClick={newGame}>New Game</button>
+        <button className='new-game-btn' onClick={newGame}>New Game</button>
       </div>
     </div>
   )

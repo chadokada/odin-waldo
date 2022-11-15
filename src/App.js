@@ -10,12 +10,12 @@ import { getBestTimes } from './firebase/dbFunctions'
 const App = () => {
 
   const [startGame, setStartGame] = useState(false);
-  const [selectedGame, setSelectedGame] = useState('ps2'); //set to blank when done
-  const [time, setTime] = useState(1);                     // set to 0 when done
+  const [selectedGame, setSelectedGame] = useState(''); //set to blank when done
+  const [time, setTime] = useState(0);                     // set to 0 when done
   const [timerRunning, setTimerRunning] = useState(false);
   const [playerName, setPlayerName] = useState('Your Name');
   const [showLeaderBoard, setShowLeaderBoard] = useState(false); //set to false when done
-  const [showSubmitScore, setShowSubmitScore] = useState(true); //set to false when done
+  const [showSubmitScore, setShowSubmitScore] = useState(false); //set to false when done
   const [scrollPosition, setScrollPosition] = useState(0);
   const [displayedTimes, setDisplayedTimes] = useState({}); //set to empy obj when done
 

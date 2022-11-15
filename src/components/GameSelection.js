@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
+import GameSelectionHeader from './GameSelectionHeader';
 import debounce from '../utils/debounce';
-import 'styles/App.css';
+import 'styles/gameselection.css'
 
 const GameSelection = ({ chooseGame }) => {
 
@@ -13,11 +14,10 @@ const GameSelection = ({ chooseGame }) => {
     return () => window.removeEventListener('resize', debouncedHandleResize)
   })
 
-
-
   return (
     <div className='game-selection-container'>
-      {/*<div className='game-selection-menu-container'>*/}
+      <GameSelectionHeader />
+      <div className='board-selection-container'>
         <div className='board-selection-img-container'>
           <img 
             className='board-selection-img' 
@@ -25,26 +25,24 @@ const GameSelection = ({ chooseGame }) => {
             src={require('assets/gameboards/ps2.jpg')}
             onClick={chooseGame}
           />
+        </div>
+        <div className='board-selection-img-container'>
           <img 
             className='board-selection-img' 
             alt='ps3' 
             src={require('assets/gameboards/ps3.jpg')}
             onClick={chooseGame}
           />
+        </div>
+        <div className='board-selection-img-container'>
           <img 
             className='board-selection-img' 
             alt='ps4' 
             src={require('assets/gameboards/ps4.jpg')}
             onClick={chooseGame}
           />
-        </div> 
-      {/*
-      </div>
-      <div className='player-name-input-row'>
-          <label htmlFor='player-name'>Your Name:</label>
-          <input id='player-name' onChange={updatePlayerName} value={playerName}></input>
-        </div> 
-      */}
+        </div>
+      </div> 
     </div>
   )
 };

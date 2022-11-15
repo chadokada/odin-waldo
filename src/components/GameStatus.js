@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/App.css';
+import 'styles/gamestatus.css';
 import GameStatusIcon from './GameStatusIcon';
 
 const GameStatus = ({ time, characters }) => {

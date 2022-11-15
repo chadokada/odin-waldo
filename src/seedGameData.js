@@ -27,18 +27,17 @@ const GAMEDATA = {
 
 const SAMPLETIMES = {
   'ps2' : [
-    ['1000', 'John'],
-    ['1000', 'Jack'],
-    ['4970', 'Player'],
-    ['5130', 'Player'],
-    ['5680', 'Player'],
-    ['6420', 'Joe Succ'],
-    ['6420', 'Joe Ducc'],
-    ['6420', 'Hong Kong Fukface'],
-    ['6420', 'Player'],
-    ['7050', 'Slick Dick'],
-    ['8400', 'Player'],
-    ['9700', 'Hong Kong Fukface']
+    ['1001', "Joe's Step Dad"],
+    ['3210', 'Skeet Davison'],
+    ['6010', 'Big Joe Stevenson'],
+    ['6400', 'Slimey Dan'],
+    ['6830', 'Big Gay Al'],
+    ['7440', 'Boltok The Flautist'],
+    ['7620', 'Buck Nasty'],
+    ['7650', 'fat fuck'],
+    ['8000', 'Bill Blurr'],
+    ['9050', 'Uncle Ken'],
+    ['16270', 'Slimey Dan']
   ],
   'ps3' : [
     ['1000', 'Jill'],
@@ -69,7 +68,7 @@ const SAMPLETIMES = {
 }
 
 
-export {GAMEDATA, SAMPLETIMES}
 
 
-//export default GAMEDATA;
+
+export {GAMEDATA, SAMPLETIMES};

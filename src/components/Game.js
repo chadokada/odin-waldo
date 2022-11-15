@@ -5,10 +5,9 @@ import GameStatus from 'components/GameStatus';
 import DropDown from 'components/DropDown';
 import {GAMEDATA} from 'seedGameData';
 
-import { characterSelected } from '../firebase/dbFunctions'
+import { characterSelected } from '../firebase/dbFunctions';
 
 const Game = ({ time, selectedGame, setTimerRunning, setShowSubmitScore, setScrollPosition }) => {
-
   const gameData = GAMEDATA[selectedGame];
 
   const hiddenDropDown = <DropDown 
@@ -19,7 +18,6 @@ const Game = ({ time, selectedGame, setTimerRunning, setShowSubmitScore, setScro
   />;
 
   // Game state
-
   let [dropDown, setDropDown] = useState(hiddenDropDown);
   let [correctGuesses, setCorrectGuesses] = useState([]);
   let [gameEnded, setGameEnded] = useState(false);

@@ -24,7 +24,23 @@
 
 .game-status-icon{
   max-height: 100%;
-  /*
-  height: 85px;
-  */
 }
+
+.home-btn{
+  color: white;
+  border: none;
+  padding: 0.7em;
+  border-radius: 10px;
+  font-size: 0.85em;
+  font-weight: bold;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+  background-color: grey;
+}  
+
+.home-btn:hover{
+  color: grey;
+  background-color: white;
+}
+

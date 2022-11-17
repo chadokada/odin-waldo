@@ -20,3 +20,7 @@ select{
   text-align: center;
   min-height: 100vh;
 }
+
+#gameboard-img{
+  width: 100vw;
+}

@@ -2,7 +2,7 @@ import React from 'react';
 import 'styles/gamestatus.css';
 import GameStatusIcon from './GameStatusIcon';
 
-const GameStatus = ({ time, characters }) => {
+const GameStatus = ({ time, characters, setStartGame, setTimerRunning }) => {
 
   const formatTime = (milliseconds) => {
     // Takes milliseconds and returns a string forrmatted mm:ss:sss
@@ -13,9 +13,15 @@ const GameStatus = ({ time, characters }) => {
     return `${mm}:${ss}:${sss}`;
   }
 
+  const handleHome = () => {
+    setTimerRunning(false);
+    setStartGame(false);
+  }
+
   return (
     <div className='game-status-container'>
       <div className='blank'>
+        <button className='home-btn' onClick={handleHome}>Home</button>
       </div>
       <div className='game-status-icons'>
         {characters.map((character) => {

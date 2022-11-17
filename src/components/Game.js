@@ -3,12 +3,13 @@ import 'styles/App.css';
 import GameBoard from 'components/GameBoard';
 import GameStatus from 'components/GameStatus';
 import DropDown from 'components/DropDown';
+import debounce from '../utils/debounce';
 import {GAMEDATA} from 'seedGameData';
-
 import { characterSelected } from '../firebase/dbFunctions';
 
-const Game = ({ time, selectedGame, setTimerRunning, setShowSubmitScore, setScrollPosition }) => {
+const Game = ({ time, selectedGame, setStartGame, setTimerRunning, setShowSubmitScore, setScrollPosition }) => {
   const gameData = GAMEDATA[selectedGame];
+  const DEFAULT_BOARD_WIDTH = 1080;
 
   const hiddenDropDown = <DropDown 
     targetXY={[0,0]}
@@ -21,6 +22,7 @@ const Game = ({ time, selectedGame, setTimerRunning, setShowSubmitScore, setScro
   let [dropDown, setDropDown] = useState(hiddenDropDown);
   let [correctGuesses, setCorrectGuesses] = useState([]);
   let [gameEnded, setGameEnded] = useState(false);
+  let [conversionFactor, setConversionFactor] = useState(0);
   
   const handleGameboardClick = (event) => {
     const targetX = event.pageX - event.target.offsetLeft;
@@ -47,8 +49,12 @@ const Game = ({ time, selectedGame, setTimerRunning, setShowSubmitScore, setScro
   // Methods for DropDown
 
   const handleMenuClick = (event) => {
-    const targetX = parseInt(event.target.closest('.character-select-dropdown').getAttribute('targetX'));
-    const targetY = parseInt(event.target.closest('.character-select-dropdown').getAttribute('targetY'));
+    const targetX = parseInt(
+      event.target.closest('.character-select-dropdown').getAttribute('targetX')
+      ) * conversionFactor;
+    const targetY = parseInt(
+      event.target.closest('.character-select-dropdown').getAttribute('targetY')
+      ) * conversionFactor;
     const character = event.target.closest('.dropdown-selection').getAttribute('character');
 
     setDropDown(hiddenDropDown);
@@ -88,9 +94,21 @@ const Game = ({ time, selectedGame, setTimerRunning, setShowSubmitScore, setScro
     };
   }, []);
 
+  useEffect(() => {
+    const debouncedHandleResize = debounce(function handleResize() {
+      const currentBoardWidth = document.querySelector('#gameboard-img').clientWidth
+      setConversionFactor(DEFAULT_BOARD_WIDTH / currentBoardWidth);
+      console.log('User window resized')
+    }, 2000)
+
+    window.addEventListener('resize', debouncedHandleResize)
+
+    return () => window.removeEventListener('resize', debouncedHandleResize)
+  })
+
   return (
     <div className="game">
-      <GameStatus time={time} characters={gameData.characters} />
+      <GameStatus time={time} characters={gameData.characters} setStartGame={setStartGame} setTimerRunning={setTimerRunning} />
       {dropDown}
       {
         !gameEnded 

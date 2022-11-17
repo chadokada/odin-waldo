@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import GameSelectionHeader from './GameSelectionHeader';
+import React, {useEffect} from 'react';
+import Header from './Header';
 import debounce from '../utils/debounce';
 import 'styles/gameselection.css'
 
@@ -12,11 +12,11 @@ const GameSelection = ({ chooseGame }) => {
 
     window.addEventListener('resize', debouncedHandleResize)
     return () => window.removeEventListener('resize', debouncedHandleResize)
-  })
+  }, [])
 
   return (
     <div className='game-selection-container'>
-      <GameSelectionHeader />
+      <Header />
       <div className='board-selection-container'>
         <div className='board-selection-img-container'>
           <img 

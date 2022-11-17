@@ -4,7 +4,7 @@ import GameSelection from 'components/GameSelection';
 import Game from './components/Game';
 import LeaderBoard from './components/LeaderBoard';
 import SubmitScore from './components/SubmitScore';
-import {SAMPLETIMES} from 'seedGameData';
+//import {SAMPLETIMES} from 'seedGameData';
 import { getBestTimes } from './firebase/dbFunctions'
 
 const App = () => {
@@ -28,9 +28,9 @@ const App = () => {
     document.querySelector('body').style.overflow = 'auto';
   };
 
-  const updatePlayerName = (event) => {
-    setPlayerName(event.target.value)
-  };
+  //const updatePlayerName = (event) => {
+  //  setPlayerName(event.target.value)
+  //};
 
   useEffect(() => {
     let interval;
@@ -87,10 +87,13 @@ const App = () => {
       }
       {
         !startGame 
-        ? <GameSelection chooseGame={chooseGame} playerName={playerName} updatePlayerName={updatePlayerName} />
+        ? <GameSelection 
+            chooseGame={chooseGame} 
+          />
         : <Game 
             time={time} 
             selectedGame={selectedGame} 
+            setStartGame={setStartGame}
             setTimerRunning={setTimerRunning} 
             setShowSubmitScore={setShowSubmitScore}
             setShowLeaderBoard={setShowLeaderBoard}

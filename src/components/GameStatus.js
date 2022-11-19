@@ -1,6 +1,7 @@
 import React from 'react';
-import 'styles/gamestatus.css';
-import GameStatusIcon from './GameStatusIcon';
+import 'styles/header.css';
+import Timer from './Timer';
+import GameStatusIcons from './GameStatusIcon';
 
 const GameStatus = ({ time, characters, setStartGame, setTimerRunning }) => {
 
@@ -20,19 +21,26 @@ const GameStatus = ({ time, characters, setStartGame, setTimerRunning }) => {
 
   return (
     <div className='game-status-container'>
+
       <div className='blank'>
         <button className='home-btn' onClick={handleHome}>Home</button>
       </div>
+
       <div className='game-status-icons'>
-        {characters.map((character) => {
+        <GameStatusIcons characters={characters} />
+        {/*
+        characters.map((character) => {
           return(
-            <GameStatusIcon key={character.name} character={character}/>
+            <GameStatusIcons key={character.name} character={character}/>
           )
-        })}
+        })
+        */}
       </div>
+
       <div className='timer'>
-        {formatTime(time)}
+        <Timer time={time} />
       </div>
+
     </div>
   )
 }

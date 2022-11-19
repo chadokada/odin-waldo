@@ -1,19 +1,30 @@
 import React, {useState, useEffect} from 'react';
 import 'styles/gameselection.css'
 
-const Header = () => {
+const Header = ({leftButton, middleElement, rightElement}) => {
 
 
 
   return (
-    <div className='game-selection-header-container'>
-      <div className='header-blank-left'>
-        <button>Button</button>
+    <div className='header-container'>
+
+      <div className='header-left'>
+        {
+          leftButton ? 
+          <button onClick={leftButton.function}>{leftButton.name}</button> :
+          'Blah'
+        }
+        
       </div>
-      <span>Find Waldo</span>
-      <div className='header-blank-right'>
-        <span>Blank</span>
+
+      <div className='header-center'>
+        {middleElement}
       </div>
+
+      <div className='header-right'>
+        {rightElement}
+      </div>
+
     </div>
   )
 };

@@ -1,4 +1,4 @@
-.game-status-container{
+.header-container{
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -9,8 +9,11 @@
   height: 75px;
   padding: 10px;
   color: white;
+
+  top: 0;
 }
 
+.header-center,
 .game-status-icons{
   display: flex;
   gap: 25px;
@@ -26,7 +29,7 @@
   max-height: 100%;
 }
 
-.home-btn{
+button{
   color: white;
   border: none;
   padding: 0.7em;
@@ -39,7 +42,7 @@
   background-color: grey;
 }  
 
-.home-btn:hover{
+button:hover{
   color: grey;
   background-color: white;
 }

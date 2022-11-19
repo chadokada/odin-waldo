@@ -1,33 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-const Timer = () => {
-  const [time, setTime] = useState(0);
-  const [running, setRunning] = useState(false);
+const Timer = ({time}) => {
+  const formatTime = (milliseconds) => {
+    // Takes milliseconds and returns a string forrmatted mm:ss:sss
+    const mm = ("0" + Math.floor((milliseconds / 60000) % 60)).slice(-2);
+    const ss = ("0" + Math.floor((milliseconds / 1000) % 60)).slice(-2);
+    const sss = ("0" + ((milliseconds / 10) % 100)).slice(-2);
 
-  useEffect(() => {
-    let interval;
-    if (running) {
-      interval = setInterval(() => {
-        setTime((prevTime) => prevTime + 10);
-      }, 10);
-    } else if (!running) {
-      clearInterval(interval);
-    }
-    return () => clearInterval(interval);
-  }, [running]);
+    return `${mm}:${ss}:${sss}`;
+  }
 
   return (
-    <div className="stopwatch">
-      <div className="numbers">
-        <span>{("0" + Math.floor((time / 60000) % 60)).slice(-2)}:</span>
-        <span>{("0" + Math.floor((time / 1000) % 60)).slice(-2)}:</span>
-        <span>{("0" + ((time / 10) % 100)).slice(-2)}</span>
-      </div>
-      <div className="buttons">
-        <button onClick={() => setRunning(true)}>Start</button>
-        <button onClick={() => setRunning(false)}>Stop</button>
-        <button onClick={() => setTime(0)}>Reset</button>       
-      </div>
+    <div className="timer">
+      {formatTime(time)}
     </div>
   );
 };

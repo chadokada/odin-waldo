@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import 'styles/App.css';
 import GameBoard from 'components/GameBoard';
+import Header from './Header';
+import GameStatusIcons from './GameStatusIcon';
+import Timer from './Timer';
 import GameStatus from 'components/GameStatus';
 import DropDown from 'components/DropDown';
 import debounce from '../utils/debounce';
 import {GAMEDATA} from 'seedGameData';
+import { Navigate } from "react-router-dom";
 import { characterSelected } from '../firebase/dbFunctions';
 
 const Game = ({ time, selectedGame, setStartGame, setTimerRunning, setShowSubmitScore, setScrollPosition }) => {
@@ -73,6 +77,12 @@ const Game = ({ time, selectedGame, setStartGame, setTimerRunning, setShowSubmit
     setShowSubmitScore(true);   
   };
 
+  const handleHome = () => {
+    setTimerRunning(false);
+    setStartGame(false);
+    //<Navigate to="character-finder/select-game"/>;
+  };
+
   useEffect(() => {
     if (correctGuesses.length > 0) { 
       const latestGuess = correctGuesses[correctGuesses.length - 1];
@@ -108,7 +118,14 @@ const Game = ({ time, selectedGame, setStartGame, setTimerRunning, setShowSubmit
 
   return (
     <div className="game">
+      <Header 
+        leftButton = {{function: handleHome, name : 'Home'}}
+        middleElement={<GameStatusIcons characters={gameData.characters}/>}
+        rightElement={<Timer time={time}/>}
+      />
+      {/* 
       <GameStatus time={time} characters={gameData.characters} setStartGame={setStartGame} setTimerRunning={setTimerRunning} />
+      */}
       {dropDown}
       {
         !gameEnded 

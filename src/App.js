@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route, Outlet, Navigate } from "react-router-dom";
 import './styles/App.css';
 import GameSelection from 'components/GameSelection';
 import Game from './components/Game';
@@ -60,6 +61,59 @@ const App = () => {
 
   return (
     <div className='App'>
+      <BrowserRouter>
+        <Routes>
+          <Route 
+            path="/" 
+            exact 
+            element={
+              <>
+                
+                <Navigate to="character-finder/select-game"/>
+            
+                <Outlet />
+              </>
+            }
+
+            /*
+            render={() => {
+              return (
+                ! startGame ?
+                  <Navigate to="/character-finder/select-game"/> :
+                  null
+              )
+            }}
+            */
+          
+          >
+            <Route path="character-finder/" element={<Outlet />}>
+              <Route path="select-game" element={<GameSelection chooseGame={chooseGame}/>}/>
+              <Route path="game" element={
+                  <Game 
+                    time={time} 
+                    selectedGame={selectedGame} 
+                    setStartGame={setStartGame}
+                    setTimerRunning={setTimerRunning} 
+                    setShowSubmitScore={setShowSubmitScore}
+                    setShowLeaderBoard={setShowLeaderBoard}
+                    setScrollPosition={setScrollPosition}
+                  />
+                }
+              /> 
+            </Route>
+
+          
+
+
+
+
+          </Route>
+
+
+
+        </Routes>
+      </BrowserRouter>
+      {/* 
       {showSubmitScore
         ? <SubmitScore 
             time={time}
@@ -100,6 +154,7 @@ const App = () => {
             setScrollPosition={setScrollPosition}
           />
       }
+      */}
     </div>
   );
 }

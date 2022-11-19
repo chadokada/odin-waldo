@@ -8,7 +8,7 @@ const AllLeaders = ({ }) => {
 
   return (
     <div className='all-leaders-container'>
-
+      <Header />
     </div>
   )
 };

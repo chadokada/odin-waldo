@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import 'styles/gameselection.css'
+//import 'styles/gameselection.css'
+import 'styles/header.css'
 
 const Header = ({leftButton, middleElement, rightElement}) => {
 
@@ -12,7 +13,7 @@ const Header = ({leftButton, middleElement, rightElement}) => {
         {
           leftButton ? 
           <button onClick={leftButton.function}>{leftButton.name}</button> :
-          'Blah'
+          'Blank'
         }
         
       </div>

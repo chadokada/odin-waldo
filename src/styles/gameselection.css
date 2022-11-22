@@ -32,14 +32,6 @@
   justify-content: space-around;
 }
 
-.header-blank-left{
-  padding-left: 100px;
-}
-
-.header-blank-right{
-  padding-right: 100px;
-}
-
 .game-selection-menu-container{
   max-width: 75%;
   border: 2px solid white;

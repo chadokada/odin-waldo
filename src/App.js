@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Outlet, Navigate } from "react-router-dom
 import './styles/App.css';
 import GameSelection from 'components/GameSelection';
 import Game from './components/Game';
+import AllLeaders from 'components/AllLeaders';
 import LeaderBoard from './components/LeaderBoard';
 import SubmitScore from './components/SubmitScore';
 //import {SAMPLETIMES} from 'seedGameData';
@@ -15,9 +16,9 @@ const App = () => {
   const [time, setTime] = useState(0);                     // set to 0 when done
   const [timerRunning, setTimerRunning] = useState(false);
   const [playerName, setPlayerName] = useState('Your Name');
-  const [showLeaderBoard, setShowLeaderBoard] = useState(false); //set to false when done
-  const [showSubmitScore, setShowSubmitScore] = useState(false); //set to false when done
-  const [scrollPosition, setScrollPosition] = useState(0);
+  //const [showLeaderBoard, setShowLeaderBoard] = useState(false); //set to false when done
+  //const [showSubmitScore, setShowSubmitScore] = useState(false); //set to false when done
+  //const [scrollPosition, setScrollPosition] = useState(0);
   const [displayedTimes, setDisplayedTimes] = useState({}); //set to empy obj when done
 
   const chooseGame = (event) => {
@@ -28,10 +29,6 @@ const App = () => {
     document.querySelector('.game-selection-container').setAttribute('visibility', 'hidden'); 
     document.querySelector('body').style.overflow = 'auto';
   };
-
-  //const updatePlayerName = (event) => {
-  //  setPlayerName(event.target.value)
-  //};
 
   useEffect(() => {
     let interval;
@@ -47,68 +44,47 @@ const App = () => {
     return () => clearInterval(interval);
   }, [timerRunning]);
 
+  /*
   useEffect(() => {
     if (showSubmitScore === false && time !== 0){
       getBestTimes(selectedGame).then((times) => {setDisplayedTimes(times)});
     }
-  }, [showSubmitScore]);
+  }, [showSubmitScore ]); 
 
   useEffect(() => {
     if (showSubmitScore === false && time !== 0){
       setShowLeaderBoard(true);
     }
-  }, [displayedTimes]);
+  }, [displayedTimes]); 
+  */
 
   return (
     <div className='App'>
       <BrowserRouter>
         <Routes>
-          <Route 
-            path="/" 
-            exact 
-            element={
-              <>
-                
-                <Navigate to="character-finder/select-game"/>
+          <Route path="/" exact element={<Navigate to="character-finder/select-game"/>} />
+          
+          <Route path="/character-finder/" element={<Outlet />} >
             
-                <Outlet />
-              </>
-            }
+            <Route path="select-game" element={<GameSelection chooseGame={chooseGame}/>} />
+            
+            <Route path="game" element={
+                <Game 
+                  time={time} 
+                  selectedGame={selectedGame} 
+                  setStartGame={setStartGame}
+                  setTimerRunning={setTimerRunning} 
+                  playerName={playerName}
+                  setPlayerName={setPlayerName}
+                  //setShowSubmitScore={setShowSubmitScore}
+                  //setShowLeaderBoard={setShowLeaderBoard}
+                  //setScrollPosition={setScrollPosition}
+                />
+            } /> 
 
-            /*
-            render={() => {
-              return (
-                ! startGame ?
-                  <Navigate to="/character-finder/select-game"/> :
-                  null
-              )
-            }}
-            */
-          
-          >
-            <Route path="character-finder/" element={<Outlet />}>
-              <Route path="select-game" element={<GameSelection chooseGame={chooseGame}/>}/>
-              <Route path="game" element={
-                  <Game 
-                    time={time} 
-                    selectedGame={selectedGame} 
-                    setStartGame={setStartGame}
-                    setTimerRunning={setTimerRunning} 
-                    setShowSubmitScore={setShowSubmitScore}
-                    setShowLeaderBoard={setShowLeaderBoard}
-                    setScrollPosition={setScrollPosition}
-                  />
-                }
-              /> 
-            </Route>
-
-          
-
-
-
+            <Route path="leaderboards" element={<AllLeaders />} />
 
           </Route>
-
 
 
         </Routes>

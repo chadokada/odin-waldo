@@ -1,12 +1,13 @@
 import React, {useEffect} from 'react';
-import  { Link } from 'react-router-dom';
+import  { Link, useNavigate } from 'react-router-dom';
 import Header from './Header';
 import debounce from '../utils/debounce';
 import 'styles/gameselection.css'
 
 const GameSelection = ({ chooseGame }) => {
 
-  /*
+  const navigate = useNavigate();
+
   useEffect(() => {
     const debouncedHandleResize = () => {debounce(function handleResize(){
       console.log(`Current window: ${window.innerWidth}x${window.innerHeight}`) 
@@ -15,15 +16,15 @@ const GameSelection = ({ chooseGame }) => {
     window.addEventListener('resize', debouncedHandleResize)
     return () => window.removeEventListener('resize', debouncedHandleResize)
   }, [])
-  */
+  
 
   return (
     <div className='game-selection-container'>
       <Header 
         leftButton={
           {
-            function: () => console.log('yo'),
-            name:'Leaderboard'
+            function: () => navigate("/character-finder/leaderboards"),
+            name:'Leaderboards'
           }
         }
         middleElement={'Character Finder!'}

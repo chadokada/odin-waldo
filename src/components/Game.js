@@ -4,14 +4,30 @@ import GameBoard from 'components/GameBoard';
 import Header from './Header';
 import GameStatusIcons from './GameStatusIcon';
 import Timer from './Timer';
-import GameStatus from 'components/GameStatus';
+
+import SubmitScore from './SubmitScore';
+
+
 import DropDown from 'components/DropDown';
 import debounce from '../utils/debounce';
 import {GAMEDATA} from 'seedGameData';
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { characterSelected } from '../firebase/dbFunctions';
+import { render } from '@testing-library/react';
 
-const Game = ({ time, selectedGame, setStartGame, setTimerRunning, setShowSubmitScore, setScrollPosition }) => {
+const Game = ({ 
+  time, 
+  selectedGame, 
+  setStartGame, 
+  setTimerRunning, 
+  playerName,
+  setPlayerName
+  /*
+  setShowSubmitScore, 
+  setScrollPosition
+  */ 
+  }) => {
+  
   const gameData = GAMEDATA[selectedGame];
   const DEFAULT_BOARD_WIDTH = 1080;
 
@@ -23,10 +39,14 @@ const Game = ({ time, selectedGame, setStartGame, setTimerRunning, setShowSubmit
   />;
 
   // Game state
-  let [dropDown, setDropDown] = useState(hiddenDropDown);
-  let [correctGuesses, setCorrectGuesses] = useState([]);
-  let [gameEnded, setGameEnded] = useState(false);
-  let [conversionFactor, setConversionFactor] = useState(0);
+  const [dropDown, setDropDown] = useState(hiddenDropDown);
+  const [correctGuesses, setCorrectGuesses] = useState([]);
+  const [gameEnded, setGameEnded] = useState(false);
+  const [conversionFactor, setConversionFactor] = useState(0);
+
+  const [scrollPosition, setScrollPosition] = useState(0);
+
+  const navigate = useNavigate();
   
   const handleGameboardClick = (event) => {
     const targetX = event.pageX - event.target.offsetLeft;
@@ -66,21 +86,24 @@ const Game = ({ time, selectedGame, setStartGame, setTimerRunning, setShowSubmit
   };
 
   const checkInput = async (character, targetX, targetY) => {
-    const selected = await characterSelected(selectedGame, character, targetX, targetY);
+    //const selected = await characterSelected(selectedGame, character, targetX, targetY);
+    const selected = true;
+
     if (selected) {
       setCorrectGuesses([...correctGuesses, character]);
     }
   };
 
   const endGame = () => {
+    setGameEnded(true)
     setTimerRunning(false);
-    setShowSubmitScore(true);   
+    //setShowSubmitScore(true);   
   };
 
   const handleHome = () => {
     setTimerRunning(false);
     setStartGame(false);
-    //<Navigate to="character-finder/select-game"/>;
+    navigate("/character-finder/select-game");
   };
 
   useEffect(() => {
@@ -92,7 +115,6 @@ const Game = ({ time, selectedGame, setStartGame, setTimerRunning, setShowSubmit
 
     if (correctGuesses.length === 3) { 
       endGame()
-      setGameEnded(true)
     };
   }, [correctGuesses]);
 
@@ -123,15 +145,25 @@ const Game = ({ time, selectedGame, setStartGame, setTimerRunning, setShowSubmit
         middleElement={<GameStatusIcons characters={gameData.characters}/>}
         rightElement={<Timer time={time}/>}
       />
-      {/* 
-      <GameStatus time={time} characters={gameData.characters} setStartGame={setStartGame} setTimerRunning={setTimerRunning} />
-      */}
+
       {dropDown}
       {
         !gameEnded 
         ? <GameBoard gameboardSrc={gameData.src} handleGameboardClick={handleGameboardClick}/> 
         : <GameBoard gameboardSrc={gameData.src}/>
       }
+      { 
+        gameEnded 
+        ? <SubmitScore 
+            time={time}
+            playerName={playerName}
+            setPlayerName={setPlayerName}
+            selectedGame={selectedGame}
+            scrollPosition={scrollPosition}
+          />
+        : null
+      }
+
     </div>
   );
 }

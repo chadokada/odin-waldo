@@ -29,12 +29,16 @@ const LeaderBoard = ({
 
   return (
     <div className='leaderboard-container'>
+      
+      {/* 
       <div className='leaderboard-title'>
         <div className='leaderboard-logo-container'>
           <img className='leaderboard-logo' alt='logo' src={require(`../assets/logos/${selectedGame}logo.png`)}></img>
         </div>
         <span>Leaderboard</span>
       </div>
+      */}
+
       <table className='leaderboard-table'>
         <thead>
           <tr>
@@ -81,9 +85,13 @@ const LeaderBoard = ({
         </tbody>
       </table>
       
+      {/* 
       <div className='leaderboard-buttons'>
         <button className='new-game-btn' onClick={newGame}>New Game</button>
       </div>
+      */}
+
+
     </div>
   )
 }

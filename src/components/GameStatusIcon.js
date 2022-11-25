@@ -1,7 +1,6 @@
 import React from 'react';
 import 'styles/App.css';
 
-
 const GameStatusIcons = ({ characters }) => {
 
   return (
@@ -25,9 +24,3 @@ const GameStatusIcons = ({ characters }) => {
 };
 
 export default GameStatusIcons;
-
-    /* 
-    <div className='game-status-icon-container'>
-      <img className='game-status-icon' id={`${character.name}-icon`} alt={character.name} src={character.src}/>
-    </div>
-    */

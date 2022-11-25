@@ -19,7 +19,8 @@
   background-color: black;
 }
 
-.lb-selection-container{
+.lb-selection-container,
+.lb-selection-container-scaled{
   display: flex;
   flex-flow: column;
   justify-content: space-around;
@@ -33,7 +34,11 @@
 }
 
 .lb-selection-container:hover{
-  transform: scale(1.03)
+  transform: scale(1.04)
+}
+
+.lb-selection-container-scaled{
+  transform: scale(1.04)
 }
 
 .lb-img-container,

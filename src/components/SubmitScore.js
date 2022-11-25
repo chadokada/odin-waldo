@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import 'styles/submitscore.css';
-import formatTime from '../utils/forrmatTime';
 import { useNavigate } from "react-router-dom";
-import { addCompletionTime } from '../firebase/dbFunctions'
+import { addCompletionTime } from '../firebase/dbFunctions';
+import formatTime from '../utils/forrmatTime';
+import 'styles/submitscore.css';
 
 const SubmitScore = ({
   time, 
@@ -10,7 +10,6 @@ const SubmitScore = ({
   setPlayerName, 
   selectedGame, 
   scrollPosition, 
-  //setShowSubmitScore, 
   }) => {
 
   const navigate = useNavigate();
@@ -24,14 +23,13 @@ const SubmitScore = ({
 
   const handleCancel = () => {
     navigate("/character-finder/select-game");
-    //setShowSubmitScore(false);
   };
 
   const handleSubmit = () => {
     const playerNameValue = document.querySelector('#player-name').value;
     setPlayerName(playerNameValue);
     addCompletionTime(selectedGame, playerNameValue, time);
-    //setShowSubmitScore(false); //REPLACE WITH NAVIGATE TO LEADERBOARD
+    navigate("/character-finder/leaderboards");
   };
 
   useEffect(() => {

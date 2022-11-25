@@ -1,10 +1,7 @@
-import React, {useState, useEffect} from 'react';
-//import 'styles/gameselection.css'
+import React from 'react';
 import 'styles/header.css'
 
 const Header = ({leftButton, middleElement, rightElement}) => {
-
-
 
   return (
     <div className='header-container'>

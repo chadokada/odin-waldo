@@ -1,31 +1,23 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import 'styles/App.css';
+import { useNavigate } from "react-router-dom";
+import {GAMEDATA} from 'seedGameData';
+import { characterSelected } from '../firebase/dbFunctions';
 import GameBoard from 'components/GameBoard';
 import Header from './Header';
 import GameStatusIcons from './GameStatusIcon';
 import Timer from './Timer';
-
 import SubmitScore from './SubmitScore';
-
-
 import DropDown from 'components/DropDown';
 import debounce from '../utils/debounce';
-import {GAMEDATA} from 'seedGameData';
-import { useNavigate } from "react-router-dom";
-import { characterSelected } from '../firebase/dbFunctions';
-import { render } from '@testing-library/react';
+import 'styles/App.css';
 
 const Game = ({ 
   time, 
   selectedGame, 
-  setStartGame, 
   setTimerRunning, 
   playerName,
   setPlayerName
-  /*
-  setShowSubmitScore, 
-  setScrollPosition
-  */ 
   }) => {
   
   const gameData = GAMEDATA[selectedGame];
@@ -83,11 +75,12 @@ const Game = ({
 
     setDropDown(hiddenDropDown);
     checkInput(character, targetX, targetY);
+
+    console.log(targetX, targetY, conversionFactor)
   };
 
   const checkInput = async (character, targetX, targetY) => {
-    //const selected = await characterSelected(selectedGame, character, targetX, targetY);
-    const selected = true;
+    const selected = await characterSelected(selectedGame, character, targetX, targetY);
 
     if (selected) {
       setCorrectGuesses([...correctGuesses, character]);
@@ -97,12 +90,10 @@ const Game = ({
   const endGame = () => {
     setGameEnded(true)
     setTimerRunning(false);
-    //setShowSubmitScore(true);   
   };
 
   const handleHome = () => {
     setTimerRunning(false);
-    setStartGame(false);
     navigate("/character-finder/select-game");
   };
 
@@ -126,6 +117,11 @@ const Game = ({
     };
   }, []);
 
+  useEffect(() => { //Sets initial conversion factor upon inital page render
+    const currentBoardWidth = document.querySelector('#gameboard-img').clientWidth
+    setConversionFactor(DEFAULT_BOARD_WIDTH / currentBoardWidth);
+  }, [])
+
   useEffect(() => {
     const debouncedHandleResize = debounce(function handleResize() {
       const currentBoardWidth = document.querySelector('#gameboard-img').clientWidth
@@ -145,7 +141,6 @@ const Game = ({
         middleElement={<GameStatusIcons characters={gameData.characters}/>}
         rightElement={<Timer time={time}/>}
       />
-
       {dropDown}
       {
         !gameEnded 
@@ -163,7 +158,6 @@ const Game = ({
           />
         : null
       }
-
     </div>
   );
 }

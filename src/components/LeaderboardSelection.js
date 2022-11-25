@@ -1,10 +1,14 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import 'styles/allleaders.css'
 
-const LeaderboardSelection = ({game}) => {
+const LeaderboardSelection = ({game, setGame}) => {
+
+  const handleClick = () => {
+    setGame(game);
+  }
 
   return (
-    <div className='lb-selection-container'>
+    <div className='lb-selection-container' game={game} onClick={handleClick}>
       <div className='lb-selection-row'></div>
       <div className='lb-img-container'>
         <img 
